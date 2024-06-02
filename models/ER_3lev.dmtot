@@ -1,0 +1,69 @@
+tree: 
+    levels: 3
+    number_samples: 3
+    number_votes: 5
+
+problem: 
+    domain: "Hotels have at least one or several rooms and each room is in turn part of exactly one hotel. Each room has a room number. 
+Guests may stay in a hotel and book one or several rooms. A room may in turn be booked by none or more guests."
+    purpose: "Entity-Relationship (ER) diagram"
+
+task: 
+    level: 1
+    name: "Entity Types"
+    description: "An ER diagram consists of the following nodes: Entity Types, Relationship Types, and Attributes. Each node has a name. 
+    You identify the Entity types nodes for the ER diagram."
+    assessments:
+        "The nodes proposed include a name."
+task: 
+    level: 2
+    name: "Relationship Types"
+    description: 'An ER diagram consists of the following nodes: Entity Types, Relationship Types, and Attributes. Each node has a name. 
+A Relationship Type is always connected to two Entity Types using the "assign" edge. 
+Each of these "assign" edges has a cardinality to express how many entity types participate in a relationship type. 
+The cardinality must have one of the following values indicating the minimum and the maximum (0,1), (1,1), (0,N), (1,N) whereby the N stands for an unlimited number of entities. 
+An "assign" edge is formally specified as "EntityType, Relationship Type, Cardinality". Ensure that every Relationship Type has at least two "assign" edges relating to it.'
+    assessments:
+        "The relationship type includes the cardinalities."
+task: 
+    level: 3
+    name: "Attributes"
+    description: 'An ER diagram consists of the following nodes: Entity Types, Relationship Types, and Attributes. Each node has a name. 
+Attributes can be attached to Entity Types and Relationship Types via an Edge named "has_attribute".'
+    assessments:
+        "The attributes are identified for entity types and relationship types."
+                
+notation:
+    name: "ER diagram in JSON"
+    description: 'Propose a domain model with the following structure in JSON syntax.
+
+    {
+    "ERdiagram": [
+        "EntityTypes": [
+            "Person",
+            "Car",
+            "Garage"
+        ],
+        "RelationshipTypes": [
+            "owns",
+            "parked_in"
+        ],
+        "Attributes": [
+            "Name",
+            "Numberplate",
+            "GarageNo"
+        ],
+        "assign": [
+            "Person, owns, (0,N)",
+            "Car, owns, (1,N)",
+            "Car, parked_in, (0,1)",
+            "Garage, parked_in, (0,N)"
+        ],
+        "has_attribute": [
+            "Person, Name",
+            "Car, Numberplate",
+            "Garage, GarageNo"
+        ]
+    ]
+    }
+'

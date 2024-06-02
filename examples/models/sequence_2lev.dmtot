@@ -1,0 +1,39 @@
+tree: 
+    levels: 2
+    number_samples: 3
+    number_votes: 5
+
+problem: 
+    domain: "Cashier starts a new sale. Cashier enters item identifier.
+System updates the sale line item. System presents item description and price. 
+Price is calculated from a set of price rules. 
+System presents total with taxes calculated. Cashier tells customer the total. 
+Cashier asks for payment. Customer pays. System handles payment. System logs the completedsale. 
+System sends sale information to the external Accounting system. 
+System sends sale information to the Inventory system. 
+System presents receipt. Customer leaves with receipt and goods."
+    purpose: "UML Sequence diagram"
+
+task: 
+    level: 1
+    name: "Actors and Systems"
+    description: "You identify the actors and systems for the sequence diagram.
+The actors and systems are explicitly mentioned in the description."
+    assessments:
+        "External systems are included."
+        "The actors are explicitly mentioned in the description."
+
+task: 
+    level: 2
+    name: "Events and parameters"
+    description: "You propose the event for each source and target actor or system, .
+The event initiates an operation upon the system, also a result from a system to an actor or another system. 
+The parameters contain the data exchanged in the event. "
+    assessments:
+        "Events express the intention of the operation between source and target."
+        "There are no duplicated events or parameters."
+
+notation:
+    name: "PlantUML"
+    description: "Propose a domain model in PlantUML format for the sequence diagram."
+

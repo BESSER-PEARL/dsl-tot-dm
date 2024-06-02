@@ -1,0 +1,3 @@
+The university course allocation system must allow students to enroll in courses. The students are identified by a student ID, and they can be enrolled in multiple courses. The system stores the registration date for tracking purposes. 
+
+The courses have registered various teaching assistants (TAs) with the name and last name details, and a TA can assist in multiple courses. TAs can review in the system the assignment details and responsibilities. Another important aspect is to manage the scheduling of courses. Each lab section has specific class times and locations.

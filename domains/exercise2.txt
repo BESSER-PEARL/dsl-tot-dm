@@ -1,0 +1,5 @@
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.

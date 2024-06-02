@@ -1,0 +1,1360 @@
+INFO:tree_of_thought.search:Input:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+INFO:tree_of_thought.search:Tree Level # 1
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+Your task is to generate a list of Classes: 
+You identify only the classes and attributes mentioned. 
+Do not include attributes not mentioned in the description.
+Do not include relationship between classes.
+As a reference, a class represents objects that share a common structure and behavior.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+
+
+Your output is a new proposal that meets the following format:
+
+Classes: 
+The Classes here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for UML class diagram and decides which choice is the best model.
+ You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. Classes are retrieved from nouns in the domain description.
+2. The principal concepts of the domain are representend in classes.
+
+The domain description is:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+Choice 1:
+Classes: 
+
+1. Person:
+   - Attributes: Name, Identifier, Children, Ancestors, AncestorDegree
+
+2. Resource:
+   - Attributes: Name, Folder
+
+3. File (Subclass of Resource):
+   - Attributes: None
+
+4. Folder (Subclass of Resource):
+   - Attributes: Resources
+
+5. User: 
+   - Attributes: Name, Identifier, Password, ResourceAccess, ViewPermission, EditPermission
+
+Choice 2:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier, degree of ancestors
+2. Class: Ancestor
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password, resource access (view/edit permission)
+
+Choice 3:
+Classes:
+1. Person:
+   - Name
+   - Identifier
+   - Number of Children
+   - Number of Ancestors
+2. Resource:
+   - Name
+   - Belongs to Folder
+3. File: (Subclass of Resource)
+4. Folder: (Subclass of Resource)
+   - Contains Resources
+5. User: (Subclass of Person)
+   - Password
+   - Accessible Resources
+   - View Permission
+   - Edit Permission
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ After carefully analyzing the classes and their attributes in each choice, it is evident that neither of the choices perfectly adheres to the domain description and the principal UML class diagram modelling criteria.
+
+1. Choice 1 lacking a necessary degree of ancestor attribute in the "Person" class, by defining ancestorDegree in Person, it assumes each person has the same degree of ancestors, which is not correct.
+2. Choice 2 is pretty comprehensive with its attributes, but it separates 'Ancestor' from 'Person' into two classes. According to the problem description, an ancestor is also a person. So it's not accurate to make 'Ancestor' as a separate class.
+3. Choice 3 also has similar issues as Choice 1, where there's a lack of the attribute to store the ancestor details and their degree for each person.
+
+After balancing the pros and cons of each choice, it seems that Choice 2, while not perfect, could be the most acceptable among the three as it does a better job capturing the relationship among 'Person,' 'User,' and 'Ancestor.'
+
+The best choice is Choice 2.
+INFO:tree_of_thought.search:Evaluator 2:
+ Analyzing the three choices, it's clear that all of them contained the principal concepts of the domain as classes and also retrieved the classes from nouns in the domain description. However, there are slight differences between them:
+
+Choice 1: This model includes all the required classes. However, it complicates the design by including the "Ancestors" and "AncestorDegree" attributes in the "Person" class. Also, it includes "Folder" attribute in "Resource" class which creates a redundancy since the relationship of resources to folders is better represented in the "Folder" class.
+
+Choice 2: This model introduces an "Ancestor" class which adds unnecessary complexity to the model as the relationship between a person and their ancestors can be represented within the "Person" class. It also presents a robust model for "User" class by identifying it as a subclass of "Person". Nonetheless, the ancestor degrees should be within Person class rather than a separate Ancestor class.
+
+Choice 3: This model encapsulates the inheritance hierarchy most appropriately. It identifies "User" as a subclass of "Person", and "Folder" and "File" as subclasses of "Resource". It also suitably represents the relationship of resources to folders and the users' permissions. However, degree of ancestor, which is an important domain concept, is missing in this model.
+
+Considering the above analysis, the classes of each choice, and the criteria for the best model, it appears that Choice 2 meets most of the domain description except the ancestor degree aspect. This could be tweaked by removing the Ancestor class and include the ancestor degree within the Person class.
+
+However, by taking the models as they are, the best choice is Choice 3, provided that we tolerate the lack of explicit indication of ancestor degrees. This is because it provides a well-rounded model representation while avoiding unnecessary complexities. 
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 3:
+ Analyzing these choices:
+
+Choice 1 represents the principal concepts fairly well but does not depict the relationships clearly. For instance, it does not signify that a User is a type of Person, or that Files and Folders are subtypes of Resource. Furthermore, the Ancestor concept mentioned in the domain description is not represented as an attribute or a class itself.
+
+Choice 2 provides a clearer representation of the concepts and their relationships. A User is shown as a type of Person, and File and Folder are accurately depicted as subclasses of Resource. However, in the Person class, instead of showing the degree of each ancestor directly as part of the class (which could result in confusion or ambiguity), it introduces a separate Ancestor class. Each Ancestor has a degree attribute, which is a simple and clear representation of the concept described in the domain. Also, the User class clearly shows the resource access—including view/edit permissions—as attributes.
+
+Choice 3 like Choice 1 also doesn't signify that a User is a type of Person or that Files and Folders are subtypes of Resource. Plus, instead of capturing the essence of the ancestor concept, it only counts the number of ancestors and children a person has, which doesn't accurately represent the domain.
+
+The best choice is 2
+INFO:tree_of_thought.search:Evaluator 4:
+ After analysing all three choices, it is clear that they all identified the classes Person, Resource, File, Folder, and User from the description. Yet it's only the models in choices 2 and 3 that correctly treat User as a subclass of Person since a User is a specific type of Person. 
+
+The three models also identify Resources as Files and Folders correctly as subclasses. 
+
+The difference between the three choices is on the attributes level. 
+
+In choice 1, the attributes for Users and Resources are directly encapsulated into the main classes. It also mentions Ancestors, Children and AncestorDegree as attributes of Person, these attributes are not necessary, they should be represented as associations and not as attributes. 
+
+The third choice, notice how the 'Number of Children' and 'Number of Ancestors' are properties of a person. The number of children or ancestors a person can have are not attributes but relationships which are better captured in associations rather than explicit attributes. 
+
+Choice 2, on the other hand, separates responsibility and concerns better, and avoids unnecessary attributes: Person's degree of ancestors, File's inheritance from Resource, and Folder's containment of resources are correctly modelled. It also models correctly the User as a subclass of Person and provides specific attributes for the User class (password and permissions).
+
+On the strength of these observations, the modelling choice that best maps to the core business concepts and rules as laid out in the domain description is Choice 2. It respects the principle of single responsibility for classes and avoids unnecessary attributes. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 5:
+ Analyzing the three choices in relation to the domain description and the given guidelines:
+
+Choice 1 fails to correctly model the domain concepts because it does not separate the Ancestor as a separate class. Furthermore, it lists way too many attributes for the Person class, which overcomplicates the model. Same goes for the User class, where ResourceAccess, ViewPermission, and EditPermission should rather be part of a relationship instead of attributes of the User.
+
+Choice 2 succeeds in correctly identifying and implementing the relevant classes. It successfully identifies User as a subclass of Person and also separates the Ancestor concept as a new class. It also separates view/edit permission as part of the resource access which is more suitable and organized.
+
+Choice 3 does a good job with the structure but introduces unnecessary attributes for Person class ("Number of Children" and "Number of Ancestors"). These should rather be derived from the relationships. It correctly models User as subclass of Person, but fails to separate the Ancestor as a different class.
+
+In conclusion, considering the principles of domain extraction and clarity of the model, I would say that Choice 2 is the best model here as it correctly identifies all major classes and relationships while keeping the model much more organized. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Thought 1: 0 votes
+INFO:tree_of_thought.search:Thought 2: 4 votes
+INFO:tree_of_thought.search:Thought 3: 1 votes
+INFO:tree_of_thought.search:Selected thought:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier, degree of ancestors
+2. Class: Ancestor
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password, resource access (view/edit permission)
+INFO:tree_of_thought.search:Tree Level # 2
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+Your task is to generate a list of Association: 
+Propose a list of associations  with cardinalities between classes. 
+Associate: used when a class is related to another.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier, degree of ancestors
+2. Class: Ancestor
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password, resource access (view/edit permission)
+
+Your output is a new proposal that meets the following format:
+
+Classes: 
+The Classes here.
+
+Association: 
+The Association here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for UML class diagram and decides which choice is the best model.
+ You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. Associations and cardinalities are included in the model with correct format.
+
+The domain description is:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+Choice 1:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*], Ancestor of Person [1..*] (degree counted as per ancestor's depth)
+2. Class: Ancestor (Instead of making Ancestor a separate class, it can be modelled within Person as each Person, except the one who is not a child, will be an Ancestor for someone)
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources (File and Folder) [0..*]
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Is Child (Person - Person) [0..1 to many]
+2. Association: Is Parent (Person - Person) [0..* to many]
+3. Association: Is Ancestor (Person - Person) [1..* to many]
+4. Association: Belongs To (Resource - Folder) [1 to many]
+5. Association: Contains (Folder - Resource) [0..* to many]
+6. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Choice 2:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Associations: parent(Y:0..1)->Person, child(Y:0..*)->Person, ancestor(Y:0..*)->Ancestor
+2. Class: Ancestor
+   - Attributes: degree 
+   - Associations: derivative(Y:0..1)->Person
+3. Class: Resource
+   - Attributes: name
+   - Associations: belongsTo(Y:0..1)->Folder, accessedBy(Y:0..*)->User
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources 
+   - Associations: contains(Y:0..*)->Resource
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password, resource access (view/edit permission)
+   - Associations: access(Y:0..*)->Resource
+
+Association: 
+
+- Association: Person <-> Ancestor 
+  - Person can have an indeterminate number of ancestors (0..*) while an Ancestor can be linked to one Person (0..1).
+- Association: Person -> Person 
+  - Person can be the child of another Person (0..1) and can have an indeterminate number of children (0..*).
+- Association: Resource -> Folder 
+  - Resource can belong to a Folder (0..1) and a folder can contain an indeterminate number of resources (0..*).
+- Association: Resource -> User 
+  - Resource can be accessed by an indeterminate number of users (0..*) while a user can access an indeterminate number of resources (0.. *).
+- Association: User -> Person 
+  - User is a person (1..1).
+
+Choice 3:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Associations: "is child of" -> Person (0..1) (a Person can be the child of at most one other Person), "has children" -> Person (0..*) (a Person can have any number of children)
+
+2. Class: Ancestor
+   - Attributes: degree (father as 1, father's father as 2, etc)
+   - Associations: "is ancestor of" -> Person (0..*) (one Ancestor can be the ancestor of any number of Persons)
+
+3. Class: Resource
+   - Attributes: name
+   - Associations: "resides in" -> Folder (1) (each Resource must belong to one Folder)
+
+4. Class: File
+   - Inheritance: Resource
+
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources
+   - Associations: "contains resources" -> Resource (0..*) (a Folder can contain an indeterminate number of Resources)
+
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password, resource access (view/edit permission)
+   - Associations: "can access" -> Resource (0..*) (a User can access any number of Resources), "has access to" -> User (0..*) (a Resource can be accessed by any number of Users)
+
+Association: 
+
+1. "is child of" (Person - Person)
+2. "has children" (Person - Person)
+3. "is ancestor of" (Ancestor - Person)
+4. "resides in" (Resource - Folder)
+5. "contains resources" (Folder - Resource)
+6. "can access" (User - Resource)
+7. "has access to" (Resource - User)
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Analyzing the choices:
+
+Choice 1:
+The model is very clear, concise, and logically correct. All relationships, including inheritance and cardinalities, are properly defined. The only issue that could be considered is making the Ancestor a separate class, but given the clarification offered, this seems sound.
+
+Choice 2:
+This choice uses associations extensively. However, the cardinality of some relationships is not quite correct. For example, 'Ancestor -> Person' should be (1..*) to represent the inderminate number of Persons that can be linked to one ancestor. 
+
+Choice 3:
+It's quite similar to Choice 1, with more focus on associations. However, it separates access permission into a separate association instead of being an attribute of the 'User, Resource' relationship. This might cause additional complexity that is not really needed.
+
+Based on the models examined, the best model representation using UML class diagram for the given domain description would be Choice 1. The associations, inheritances, and cardinalities are well captured, and it seems to best reflect the complexities of the domain without unnecessary complications.
+
+So, the best choice is 1.
+INFO:tree_of_thought.search:Evaluator 2:
+ After carefully analyzing each choice, we can conclude that:
+
+Choice 1: Ancestor is a separate class, which deviates from the requirement. Degree of Ancestor was supposed to be an attribute of Person. Also, the cardinalities in association aren't clear (e.g. 0..1 Person "has a" child, not "is a" child).
+
+Choice 2: The ancestor's associates are erroneous. It considers "ancestor" as a Person but not a Person's attribute. Similar to Choice 1 it fails to follow the given domain description precisely.
+
+Choice 3: This best follows the domain description. Ancestor is not a class but an attribute derived from the depth of Person implied in the description. All associations are well described as per the requirement. Cardinalities and navigation have been set accurately.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 3:
+ After closely analyzing all three choices, we can conclude that all of them address the given requirements in the domain description and model the relationships and attributes correctly.
+
+However, there are some differences that make one of the choices better than the others. 
+
+Choice 1 models the domain optimally except for the fact that Ancestor is unnecessarily modeled as an extra class. Each person can be an ancestor and this information can be derived from the Person class itself. Creating a separate class for Ancestor adds extra complexity which can be avoided, making maintenance harder in the future.
+
+Choice 2 is similar to Choice 1 but it presents the associations more cleanly and directly in line with the class definitions, which aids comprehension and follows good practice in UML diagrams. However, this choice also includes Ancestor as a separate class which, as explained earlier, seems redundant.
+
+Choice 3, just like the first two choices, also models the domain optimally. However, there is a distinguishing feature here. It drops the unnecessary Ancestor class and represents the ancestor information as an association within the Person class. So, not only does this choice cover all the necessary associations and attributes but it also reduces complexity by removing the unnecessary Ancestor class. This makes the domain easier to understand and manage in the long run.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 4:
+ After analyzing all the three choices, I found that choice 1 is the best-built model. It correctly models all the associations between the different classes in the problem domain, including cardinalities. The separation of classes and use of inheritance is appropriate, and it correctly represents the requirements, such as each Resource belonging to a Folder, each Person having children and ancestors with degree, and Users having access to Resources. The additional attributes for the 'Has Access' association accurately captures the nuanced information of the Users' permissions to view or edit Resources.
+
+Therefore, the conclusion is that the best choice is 1.
+INFO:tree_of_thought.search:Evaluator 5:
+ After analyzing all three models, Choice 1 seems to be the best fit as per the given domain description. 
+
+Some key reasons are: 
+
+- Choice 1 includes all key classes mentioned in the problem, including Person, User, Resource, File, Folder, and incorporates the "Ancestor" relationship as an association within Person rather than a separate class, which aligns with the given scenario as every single Person (except the starting one) has the potential to be an Ancestor.
+
+- It provides proper cardinalities for the associations between classes, indicating the exact number of associated instances which meets the problem requirement. 
+
+- It correctly models the inheritance relations for File and Folder from Resource and User from Person, preserving the hierarchical structure of the problem description.
+
+- The view/edit permissions for User is also properly incorporated into the Access association between User and Resource.
+
+Consequently, the best choice is 1.
+INFO:tree_of_thought.search:Thought 1: 3 votes
+INFO:tree_of_thought.search:Thought 2: 0 votes
+INFO:tree_of_thought.search:Thought 3: 2 votes
+INFO:tree_of_thought.search:Selected thought:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*], Ancestor of Person [1..*] (degree counted as per ancestor's depth)
+2. Class: Ancestor (Instead of making Ancestor a separate class, it can be modelled within Person as each Person, except the one who is not a child, will be an Ancestor for someone)
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources (File and Folder) [0..*]
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Is Child (Person - Person) [0..1 to many]
+2. Association: Is Parent (Person - Person) [0..* to many]
+3. Association: Is Ancestor (Person - Person) [1..* to many]
+4. Association: Belongs To (Resource - Folder) [1 to many]
+5. Association: Contains (Folder - Resource) [0..* to many]
+6. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+INFO:tree_of_thought.search:Tree Level # 3
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+Your task is to generate a list of Contain: 
+Propose a list of contain relations between classes. 
+Contain: Is a special kind of association relationship where the contained class exists as part of the containing class.
+For example: The class Car contain Wheel.
+You apply changes to the domain model proposed if an association must be modeled as contain.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*], Ancestor of Person [1..*] (degree counted as per ancestor's depth)
+2. Class: Ancestor (Instead of making Ancestor a separate class, it can be modelled within Person as each Person, except the one who is not a child, will be an Ancestor for someone)
+   - Attributes: degree (father as 1, father's father as 2, etc)
+3. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources (File and Folder) [0..*]
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Is Child (Person - Person) [0..1 to many]
+2. Association: Is Parent (Person - Person) [0..* to many]
+3. Association: Is Ancestor (Person - Person) [1..* to many]
+4. Association: Belongs To (Resource - Folder) [1 to many]
+5. Association: Contains (Folder - Resource) [0..* to many]
+6. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Your output is a new proposal that meets the following format:
+
+Classes: 
+The Classes here.
+
+Association: 
+The Association here.
+
+Contain: 
+The Contain here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for UML class diagram and decides which choice is the best model.
+ You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. There are no duplicated relationships.
+2. The model uses contain relationship for whole-part relationship.
+
+The domain description is:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+Choice 1:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Note:
+1. Instead of making Child, Parent, and Ancestor separate associations or classes, they are all turned into one association known as Ancestors/Descendants within the Person class. This simplifies the model and intuitively captures the hierarchical relationships among people.
+2. The Folder class contains the resources where the contained resources are Files or Folders. A Contain relation is used to depict this hierarchy.
+
+Choice 2:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Association: Contains Resource [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Is Child (Person - Person) [0..1 to many]
+2. Association: Is Parent (Person - Person) [0..* to many]
+3. Association: Belongs To (Resource - Folder) [1..*]
+4. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain:
+1. Contain: Folder - Resource (A Folder contains Files or other Folders, so Resource exists as part of Folder)
+2. Contain: Person - Person (Every person is a child of another person, so a person can be seen as part of the parent)
+3. Contain: User - Resource (A User has the ability to access many Resources, so a User can be seen as containing those Resources)
+
+Choice 3:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*], Ancestor of Person [1..*] (degree counted as per ancestor's depth)
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Attributes: contained resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Is Child (Person - Person) [0..1 to many]
+2. Association: Is Parent (Person - Person) [0..* to many]
+3. Association: Is Ancestor (Person - Person) [1..* to many]
+4. Association: Belongs To (Resource - Folder) [1 to many]
+5. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Person contains Child of Person [0..1]
+2. Contain: Person contains Parent of Person [0..*]
+3. Contain: Person contains Ancestor of Person [1..*]
+4. Contain: Folder contains Resource [0..*]
+5. Contain: User contains Access Resource [0..*]
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Choice 1 follows the criteria completely. There are no duplicated relationships as each association represents a unique relationship. It uses contain relationships for whole-part relationships, like how a Folder contains Resources. This model also simplifies the model by turning Child, Parent, and Ancestor associations into a single Ancestor/Descendant association, capturing the hierarchical relationship in a more intuitive way.
+
+Choice 2 does not completely adhere to the criteria. It violates the requirement that there should be no duplicated relationships. In this model, a Person's parent-child relationship is represented twice by two different associations: 'Is Child' and 'Is Parent'. This duplication is unnecessary and complicates the model. Also, the depiction of a User containing Resources and a Person containing another Person using contain relations does not correctly express intended whole-part relationships.
+
+Choice 3 also contains duplicated relationships and can potentially create complex loops. Here, a person's relationships are represented thrice by three different associations: 'Is Child', 'Is Parent', and 'Is Ancestor'. This unnecessary duplication complicates the model. The use of contain relation for a User accessing Resources, and a Person being a Child or Parent or Ancestor of another Person, is not correctly expressing the required functional relationships.
+
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 2:
+ Choice 1: This model is well organized. It combines child, parent, and ancestor into one association called Ancestor/Descendant to represent the hierarchy of people. However, there seems to be no way to capture ancestor degrees in this model.
+
+Choice 2: This model separates the relationships of a Person into Child and Parent relationships. However, it lacks a mechanism to track ancestors, and it also does not seem to capture the degree of ancestry. Also, the use of containment for User–Resource relationship is questionable since the User does not contain the Resource but has access to it.
+
+Choice 3: This model separates the associations of Person into Child, Parent, and Ancestor, which is more detailed but also more complicated. The association of Ancestors seems to account for the degree of ancestry. However, it uses a containment relation between User and Resource which, as mentioned before, does not seem logical, as the User does not contain the Resource but just has access to it.
+
+Based on the given criteria and the above analysis, Choice 1 seems to be the more appropriate model for this domain. Even though it does not capture the degree of ancestry, it is simpler and more concise, and it meets all the other requirements.
+
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 3:
+ In the first choice, there is a duplication of relationships where the 'Child of Person - Parent of Person' and 'Ancestor/Descendant of Person' essentially represent the same relationship. The containment of resources within the Folder class is well done, but the relationship between the Person (Users) and Resources is not established as a containment relationship. It does not clearly depict the rule mentioned in the domain model that a User can’t exist without the Resources they can access. 
+In the second Choice, a similar issue persists where the 'Child of Person - Parent of Person' relationship is duplicated by being represented as both an Association and a Containment relationship. There is also potential for mix-up in the containment relationships being used to represent 'User-Resource' and 'Person-Person' relationships. 
+In the third choice, although there is some repetition of the 'Child of Person - Parent of Person' relationship by introducing an Ancestor relationship, it more accurately represents the rules mentioned in the domain model. The for-each loop with Person and Resource classes is modeled as Containment, which is appropriate for representing the 'whole-part' relationship. 
+Looking at all three choices, despite having duplicated relationships, the third one abides better by the rules outlined in the domain model and so demonstrates a more accurate modeling of the described system. Therefore, my conclusion is:
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 4:
+ Choice 1 is the simplest and easiest to understand, meeting our criteria of no duplicated relationships and the use of contain relationship. It captures the key aspects of our domain model including the relationships between Person, Ancestors, and Descendants, as well as between Users, Folders, and Resources. 
+
+Choice 2 diverges from the domain description by separating Parent and Child into separate associations within Person, causing a duplication. This is unnecessary and complicates understanding of the model. The choice to use containment for User-Resource isn't accurately reflecting the domain descriptive, as a User does not contain a Resource, they simply have access.
+
+Choice 3 unnecessarily complicates the model by separating Child, Parent, and Ancestor into separate associations as well as containment within Person. Furthermore, it separates the resources within a folder into an attribute rather than using a containment relation which would better indicate the whole-part relationship. 
+
+Therefore, the best choice is 1.
+INFO:tree_of_thought.search:Evaluator 5:
+ All three choices meet most of the basic requirements, but when considering the choice more deeply:
+
+1. Choice 1 uses neat manner by simplifying the Person's relationship into one association, which effectively contains Parent, Child, and Ancestors. The other parts meet the requirements well, except for the requirement of ancestors' degree, which is not reflected in this model.
+
+2. Choice 2 inappropriately uses the container relationship between User and Resources, which contradicts with the domain description. It's not true to say a User contains the Resources.
+
+3. Choice 3 is complex as it uses container relationships for almost every association. This leads to unnecessary complexity and duplicates some relationships which contradicts with the announcement.
+
+Based on the above evaluation, I would conclude "The best choice is 1". Although it doesn't reflect the degree of ancestors, it meets all the other requirements and maintains a good level of simplicity.
+INFO:tree_of_thought.search:Thought 1: 4 votes
+INFO:tree_of_thought.search:Thought 2: 0 votes
+INFO:tree_of_thought.search:Thought 3: 1 votes
+INFO:tree_of_thought.search:Selected thought:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Note:
+1. Instead of making Child, Parent, and Ancestor separate associations or classes, they are all turned into one association known as Ancestors/Descendants within the Person class. This simplifies the model and intuitively captures the hierarchical relationships among people.
+2. The Folder class contains the resources where the contained resources are Files or Folders. A Contain relation is used to depict this hierarchy.
+INFO:tree_of_thought.search:Tree Level # 4
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+Your task is to generate a list of Inheritance: 
+Propose a list of inheritance between classes. 
+Inherit: refers to one class (child class) to inherit the identical functionality of another class (super class).
+For example: The classes Student and Professor inherit from Person.
+You apply changes to the domain model proposed if an association must be modeled as inheritance.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Note:
+1. Instead of making Child, Parent, and Ancestor separate associations or classes, they are all turned into one association known as Ancestors/Descendants within the Person class. This simplifies the model and intuitively captures the hierarchical relationships among people.
+2. The Folder class contains the resources where the contained resources are Files or Folders. A Contain relation is used to depict this hierarchy.
+
+Your output is a new proposal that meets the following format:
+
+Classes: 
+The Classes here.
+
+Association: 
+The Association here.
+
+Contain: 
+The Contain here.
+
+Inheritance: 
+The Inheritance here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for UML class diagram and decides which choice is the best model.
+ You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. There are no duplicated relationships.
+2. The model uses inheritance with one super classes and more than one sub classes.
+
+The domain description is:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+Choice 1:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: name, identifier, password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many]
+
+Inheritance: 
+1. Inheritance: File Inherits Resource (File - Resource)
+2. Inheritance: Folder Inherits Resource (Folder - Resource)
+3. Inheritance: User Inherits Person (User - Person)
+
+Note:
+Breaking down the new proposal to compare it with the previous one, we remain the same. It is because User now inherits the attributes of Person (name and identifier from Person) and all the associations. File and Folder inherit the property of Resource like their name attribute and the association of belonging to another Folder.
+
+Choice 2:
+Classes: 
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] (with view/edit permissions)
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many] (with additional attributes: canView, canEdit)
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many]
+
+Inheritance: 
+1. Inheritance: File Inherits Resource 
+2. Inheritance: Folder Inherits Resource 
+3. Inheritance: User Inherits Person 
+
+Note: 
+1. We explicate the model's inheritance part. In this model, File inherits from Resource because File is a Resource, but with different characteristics than a Folder; similarly, for Folder and Resource. User inherits from Person because every User is a Person with additional characteristics (like password).
+1. The remaining model remains the same as before but now covers inheritance for a more extensive understanding of domain modeling.
+
+Choice 3:
+Classes:
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+   - Association: Accessed by User [0..*]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password, view_permission, edit_permission
+   - Association: Access Resource [0..*] 
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Note:
+1. User class is a specialized (child) version of the Person class, so User inherits Person.
+2. File and Folder classes are specialized versions of the Resource class so they inherit Resource.
+3. The Access association between User and Resource has been made explicit, with added attributes for viewing and editing permissions. This captures the relationships and specific behaviours described in the domain.
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ The best choice is 3. This model offers the best presentation of the domain's overall structure, making use of inheritance and maintaining clear definitions and associations between classes. Additionally, in accordance with the “Has Access” association, it correctly positions the view_permission and edit_permission attributes within the User class rather than being confined to the association itself. Creating an explicit 'Accessed by User' association for the Resource class gives it a more symmetrical structure and confirms that a Resource can be accessed by multiple Users. In addition, there are no duplicated relationships, aligning with our evaluation criteria.
+INFO:tree_of_thought.search:Evaluator 2:
+ Analyzing each model, we observe:
+
+For Choice 1, there are two problems. The first is the redundancy in the User class. Name and identifier attributes are duplicated in the Person class and the User class. Due to inheritance, these attributes already are part of the User class. The second problem is there is only one inheritance relationship between Person and User, but the model's requirement demands at least two inheritance relationships.
+
+The redundancy problem also exists in Choice 2. Even worse, there is no such class that models the Ancestor class explicitly.
+
+Choice 3 seems to have overcome these problems. There are no duplicated relationships as User inherits from Person. The User class has password, view_permission and edit_permission attributes, with an association to Resource. Resource has associations to both Folder and User, thus satisfying the many-to-many relationship. Also, the Person class models the Ancestor-Child relationship with itself.
+
+In conclusion, Choice 3 clearly is the most appropriate model that satisfies the domain description. The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 3:
+ Based on the domain description, the main difference between the choices is the location of the "view" and "edit" permissions. In Choices 1 and 2, these permissions are specific to the access between User and Resource. However, in Choice 3, these permissions are considered as attributes of the User, implying that a User either can view and edit all the Resources they have access to, or they cannot. 
+
+The domain description implies that these permissions are specific to each User-Resource relationship, i.e., a User might have different permissions for different Resources. Therefore, the models in Choices 1 and 2 are more accurate in capturing this aspect of the domain description. 
+
+Among them, the Choice 2 is the best choice as it makes inheritance more explicit and does not duplicate attributes of the Person class in the User class, thereby adhering better to the criteria. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 4:
+ Looking through the choices, all three models are quite similar and conform to the rules of the domain description. However, they differ subtly in certain aspects.
+
+In Choice 1 and Choice 2, there appears to have a slight redundancy as the User class has both name and identifier attributes even though they are supposed to inherit these attributes from the Person class during inheritance. 
+
+On the other hand, Choice 3 perfectly models the domain without redundancy as it merges the view and edit permissions attributes into the User class, eliminating the need for additional attributes in the associations. Moreover, it correctly applies the inheritance concept, where User class inherits from Person class, and the File and Folder classes inherit from the Resource class. 
+
+Hence, when focusing on both the criteria of no duplicate relationships and correct modern use of inheritance, then Choice 3 stands out as being the most thorough and effective at modeling the given domain. 
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 5:
+ All three choices correctly use inheritance and the User class accurately inherits from the Person class. However, while all options have adhered to the inheritance with one superclass and at least one subclass, only Choices 1 and 2 do not have any duplicated associations. 
+
+Choice 1 and 2 are identical except for the redundant 'name' and 'identifier' attributes in the User class in Choice 1. As these are already in the Person class which User inherits from, they are not needed again in the User class. 
+
+Choice 3 incorrectly adds viewing and editing permissions in the User class. These attributes are better suited as part of the association between User and Resource.
+
+The best choice is 2.
+INFO:tree_of_thought.search:Thought 1: 0 votes
+INFO:tree_of_thought.search:Thought 2: 2 votes
+INFO:tree_of_thought.search:Thought 3: 3 votes
+INFO:tree_of_thought.search:Selected thought:
+Classes:
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+   - Association: Accessed by User [0..*]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password, view_permission, edit_permission
+   - Association: Access Resource [0..*] 
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Note:
+1. User class is a specialized (child) version of the Person class, so User inherits Person.
+2. File and Folder classes are specialized versions of the Resource class so they inherit Resource.
+3. The Access association between User and Resource has been made explicit, with added attributes for viewing and editing permissions. This captures the relationships and specific behaviours described in the domain.
+INFO:tree_of_thought.search:Tree Level # 5
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+Your task is to generate a list of Association classes: 
+Identify the association classes in the domain description.
+As a reference, an Association Class connects a set of Classes but also defines a set of Features that belong to the connection itself and not to any of the associated Classes.
+You apply changes to the domain model proposed if an association class has a conflict with other classes or relationships.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Classes:
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+   - Association: Accessed by User [0..*]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password, view_permission, edit_permission
+   - Association: Access Resource [0..*] 
+
+Association: 
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Note:
+1. User class is a specialized (child) version of the Person class, so User inherits Person.
+2. File and Folder classes are specialized versions of the Resource class so they inherit Resource.
+3. The Access association between User and Resource has been made explicit, with added attributes for viewing and editing permissions. This captures the relationships and specific behaviours described in the domain.
+
+Your output is a new proposal that meets the following format:
+
+Classes: 
+The Classes here.
+
+Association: 
+The Association here.
+
+Contain: 
+The Contain here.
+
+Inheritance: 
+The Inheritance here.
+
+Association classes: 
+The Association classes here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for UML class diagram and decides which choice is the best model.
+ You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. The association classes proposed include attributes.
+
+The domain description is:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+Choice 1:
+Classes: 
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Parent of Person. From [1]. To [0..*]
+   - Association: Child of Person. From [0..*]. To [0..1]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Association: Contains Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Grants Access to Resource [0..*]
+
+Association: 
+1. Association: Parent/Child (Person - Person) From [1]. To [0..*]
+2. Association: Belongs To (Resource - Folder) From [1]. To [0..*]
+3. Association: Grants Access (User - Resource) From [0..*]. To [0..*]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) From [1]. To [0..*] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Association classes: 
+1. Association Class: Ancestor with associated class Person and attributes degree. From [1]. To [0..*]
+2. Association Class: AccessPermissions with associated classes User and Resource and attributes: view, edit. From [0..*]. To [0..*]
+
+Changes in Classes:
+1. User class does not have view_permission and edit_permission attributes, they are moved to AccessPermissions Association Class.
+2. Two associations are added to Person class as there were ambiguity between Parent and Child.
+
+Changes in Associations:
+1. Parent/Child Associations are added in place of Ancestor/Descendant for the Person Class, making it more explicit as who is the Parent and who is the Child.
+2. The view and edit permissions are moved to an Association Class, AccessPermissions.
+
+Notes:
+1. The domain model is based on the principle of inheritance, association and containment.
+2. The AccessPermissions Association Class was needed to represent mainly the view_permission and edit_permission, which did not make sense directly on User class.
+3. It is also possible to see more deeply into Ancestors using the Ancestor Association Class and it's degree attribute.
+
+Choice 2:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Child of Person [0..1], Parent of Person [0..*]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+   - Association: Accessed by User [0..*]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Association: Contains Resources [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] 
+
+Association: 
+1. Association: Child/Parent (Person - Person) [0..1 to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Has Access (User - Resource) [0..* to many]
+
+Contain:
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Inheritance:
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Association classes: 
+1. Association Class: Ancestor 
+   - Association Between: Person and Person 
+   - Attributes: degree
+2. Association Class: Access 
+   - Association Between: User and Resource
+   - Attributes: view_permission, edit_permission. 
+
+Note:
+1. Here, the concept of 'Ancestor' and 'Access' is being modelled as Association Classes between Person and Person, and User and Resource, respectively. They encapsulate not only the relationship but also additional information (degree, view_permission, edit_permission) pertinent to the relationship.
+2. In Person Class, instead of having a generic 'Ancestor/Descendant of Person' association, it's delineated to 'Child of Person' and 'Parent of Person' to better represent the domain description.
+
+Choice 3:
+Classes: 
+
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Ancestor/Descendant of Person [0..*]
+2. Class: Genealogy
+   - Attributes: degree
+   - Association: Between Person to Person [1 to many]
+3. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+4. Class: File
+   - Inheritance: Resource
+5. Class: Folder
+   - Inheritance: Resource
+   - Contain: Resources (File and Folder) [0..*]
+6. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Access Resource [0..*] 
+7. Class: Access
+   - Attributes: view_permission, edit_permission
+   - Association: Between User and Resource [0..*]
+
+Association: 
+
+1. Association: Ancestor/Descendant (Person - Person) [0..* to many]
+2. Association: Belongs To (Resource - Folder) [1 to many]
+3. Association: Access (User - Access) [0..* to many]
+4. Association: Access (Access - Resource) [0..* to many]
+5. Association: Ancestor/Descendant (Person - Genealogy) [1 to many]
+6. Association: Ancestor/Descendant (Genealogy - Person) [1 to many]
+
+Contain: 
+
+1. Contain: Folder Contains Resources (Folder - Resource) [0..* to many] 
+
+Inheritance: 
+
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Association classes: 
+
+1. Association Class: Genealogy (connects Person with Person)
+2. Association Class: Access (connects User with Resource)
+
+Note:
+
+1. The class, Genealogy is an association class which records the intermediate information between a Person and their descendants/ancestors. 
+2. The class, Access is an association class which records the intermediate information about a User's relationship with Resources, specifically their edit and view permissions.
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Out of all three choices, the best choice will be Choice 1. This choice provides clear understanding of the relationships and contains needed attributes. This choice models all functionalities effectively such as the indeterminate number of ancestors and the degree of each ancestor of a person well. The inheritance of User from a Person is also well represented.
+
+This choice also moved the view_permission and edit_permission attributes to AccessPermissions Association which makes it easy to manage and understand the access permissions. For the Person class, the ambiguity between the parent and child has also been clearly separated. 
+
+The association classes in this choice such as Ancestor and AccessPermissions have attributes which is a plus. 
+
+While other choices do fulfil the requirements of modelling to a certain extent, choice 1 gives a more intuitive and readable design, as it adheres more to the principles of good domain modelling.
+
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 2:
+ 3. The only discrepancy lies in the representation of the relationship between a Person and their ancestors. While the genealogy class accounts for the degree, the arrangement depicted doesn't distinctly identify parent-child relationships causing ambiguity.
+   
+Upon comparing the three choices in line with the criterias:
+
+1. In terms of association classes with attributes, all three choices have two association classes with attributes. 
+
+However, based on the more detailed reasoning behind the associations, a clearer distinction between parent and child, and a cleaner representation of permissions related to resource access -- 
+
+The best choice is Choice 1.
+INFO:tree_of_thought.search:Evaluator 3:
+ Choice 1 and Choice 2 are quite similar, with both accurately adhering to the domain description and meeting the criteria of good association classes with inclusion of attributes. However, Choice 2 slightly edges out in consideration of better clarity in defining the associations. The "Child of Person" and "Parent of Person" associations in Choice 2 are more explicit than the "Parent of Person" and "Child of Person" associations from Choice 1. Additionally, in Choice 2, the Ancestor association class clearly associates with Person and Person with an attribute degree which better models the domain description. 
+
+On the other hand, Choice 3 introduces unnecessary complexity by introducing Genealogy and Access as standalone classes rather than as association classes which may cause some confusion. The Access class acts as an association class between the User and Resource in spite of being declared as a standalone class. 
+
+After a detailed analysis of the three choices, the best model which aligns with the principles of clarity, simplicity and adherence to the domain description is Choice 2. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 4:
+ 3. Rather than labeling the Person-Person association as 'Child' or 'Parent', this model uses a more generalized 'Ancestor/Descendant' association. This may make the model less intuitive for some users.
+4. The folder-resource containment relationship and user-resource access relationship are well-represented. 
+5. The Access and Genealogy association classes include attributes as specified in the domain description, which fulfills the first criteria.
+
+After careful analysis, it becomes evident that the best model in describing the given domain is Choice 1. It uses a straightforward approach to represent the Person-Person associations as child and parent, making it more intuitive and simple. The model also carefully incorporates all the relationships given in the domain description and leverages association classes to encapsulate additional information about the relationships. Therefore:
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 5:
+ 3. The model in Choice 3 provides a clear distinction between the relationships of a Person with their ancestors and the association between a User and their accessible Resources by creating association classes, Genealogy and Access. However, this model has a redundancy in associations involving the Access class.
+ 
+After considering all choices, the best model for this domain appears to be Choice 1, as it effectively models the relationships described in the domain description. The model includes clear representation of relationships between individuals (child and parent), accurately portrays the differing types of Resources (Files and Folders), and effectively tracks a User's access permissions to Resources through the Association Class AccessPermissions. The class diagram of choice 1 exhibits a clear understanding of the domain with no unnecessary redundancy or confusion. 
+
+The best choice is 1.
+INFO:tree_of_thought.search:Thought 1: 4 votes
+INFO:tree_of_thought.search:Thought 2: 1 votes
+INFO:tree_of_thought.search:Thought 3: 0 votes
+INFO:tree_of_thought.search:Selected thought:
+Classes: 
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Parent of Person. From [1]. To [0..*]
+   - Association: Child of Person. From [0..*]. To [0..1]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Association: Contains Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Grants Access to Resource [0..*]
+
+Association: 
+1. Association: Parent/Child (Person - Person) From [1]. To [0..*]
+2. Association: Belongs To (Resource - Folder) From [1]. To [0..*]
+3. Association: Grants Access (User - Resource) From [0..*]. To [0..*]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) From [1]. To [0..*] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Association classes: 
+1. Association Class: Ancestor with associated class Person and attributes degree. From [1]. To [0..*]
+2. Association Class: AccessPermissions with associated classes User and Resource and attributes: view, edit. From [0..*]. To [0..*]
+
+Changes in Classes:
+1. User class does not have view_permission and edit_permission attributes, they are moved to AccessPermissions Association Class.
+2. Two associations are added to Person class as there were ambiguity between Parent and Child.
+
+Changes in Associations:
+1. Parent/Child Associations are added in place of Ancestor/Descendant for the Person Class, making it more explicit as who is the Parent and who is the Child.
+2. The view and edit permissions are moved to an Association Class, AccessPermissions.
+
+Notes:
+1. The domain model is based on the principle of inheritance, association and containment.
+2. The AccessPermissions Association Class was needed to represent mainly the view_permission and edit_permission, which did not make sense directly on User class.
+3. It is also possible to see more deeply into Ancestors using the Ancestor Association Class and it's degree attribute.
+INFO:tree_of_thought.search:Notation prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for UML class diagram that creates a domain model from a given description:
+A Person has a name and an identifier. Every Person is the child of another Person and can have an indeterminate number of children (however, there will be one Person who is not the child of any other Person). A Person has an indeterminate number of ancestors (the ancestors of a Person are their father and the ancestors of their father). We will be interested in knowing the degree of each ancestor of a Person (1 for the father, 2 for the father's father, etc.).
+
+A Resource has a name. There are two types of Resources: Files and Folders. Every resource belongs to a Folder and cannot exist outside of a Folder (however, there will be one Folder that does not follow that rule: the root Folder does not belong to any other Folder). Each Folder contains an indeterminate number of Resources.
+
+A User is a Person who, in addition to a name and an identifier, also has a password to access an indeterminate number of Resources, and each Resource can be accessed by an indeterminate number of Users. When a User can access a resource, we will be interested in knowing if they can view it and if they can edit it.
+
+You use the thoughts below to return the specified domain model:
+Classes: 
+1. Class: Person
+   - Attributes: name, identifier
+   - Association: Parent of Person. From [1]. To [0..*]
+   - Association: Child of Person. From [0..*]. To [0..1]
+2. Class: Resource
+   - Attributes: name
+   - Association: Belongs to Folder [1]
+3. Class: File
+   - Inheritance: Resource
+4. Class: Folder
+   - Inheritance: Resource
+   - Association: Contains Resources (File and Folder) [0..*]
+5. Class: User
+   - Inheritance: Person
+   - Attributes: password
+   - Association: Grants Access to Resource [0..*]
+
+Association: 
+1. Association: Parent/Child (Person - Person) From [1]. To [0..*]
+2. Association: Belongs To (Resource - Folder) From [1]. To [0..*]
+3. Association: Grants Access (User - Resource) From [0..*]. To [0..*]
+
+Contain: 
+1. Contain: Folder Contains Resources (Folder - Resource) From [1]. To [0..*] 
+
+Inheritance: 
+1. Inheritance: File Inherits from Resource
+2. Inheritance: Folder Inherits from Resource
+3. Inheritance: User Inherits from Person
+
+Association classes: 
+1. Association Class: Ancestor with associated class Person and attributes degree. From [1]. To [0..*]
+2. Association Class: AccessPermissions with associated classes User and Resource and attributes: view, edit. From [0..*]. To [0..*]
+
+Changes in Classes:
+1. User class does not have view_permission and edit_permission attributes, they are moved to AccessPermissions Association Class.
+2. Two associations are added to Person class as there were ambiguity between Parent and Child.
+
+Changes in Associations:
+1. Parent/Child Associations are added in place of Ancestor/Descendant for the Person Class, making it more explicit as who is the Parent and who is the Child.
+2. The view and edit permissions are moved to an Association Class, AccessPermissions.
+
+Notes:
+1. The domain model is based on the principle of inheritance, association and containment.
+2. The AccessPermissions Association Class was needed to represent mainly the view_permission and edit_permission, which did not make sense directly on User class.
+3. It is also possible to see more deeply into Ancestors using the Ancestor Association Class and it's degree attribute.
+You create the PlantUML code: 
+Create the PlantUML code with the format described below:
+First, create the classes. Omit methods in classes.
+Second, add contain and associations with its cardinalities. 
+Third, add the inheritance.
+Fourth, create the association classes using the following format:
+(<Source_Class> , <Target_Class>) .. <Association_Class>
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Model notation:
+Here is the PlantUML code you'll generate:
+
+```
+@startuml
+class Person {
+  name
+  identifier
+}
+class Resource {
+  name
+}
+class File {
+}
+class Folder {
+}
+class User {
+  password
+}
+Person "1" -- "0..*" Person : Parent_Child
+Resource "1" -- "0..*" Folder : Belongs_to
+User "0..*" -- "0..*" Resource : Grants_Access
+Folder "1" -- "0..*" Resource : Contains
+
+File --|> Resource
+Folder --|> Resource
+User --|> Person
+
+class Ancestor {
+  degree
+}
+class AccessPermissions {
+  view
+  edit
+}
+(Person, Person) .. Ancestor
+(User, Resource) .. AccessPermissions
+@enduml
+```
+
+Just copy this code and paste it into an online PlantUML generator and you'll see a generated UML diagram from this code.
+
+This code defines all the classes mentioned in the description and establishes relationships between them according to the domain description. I have modeled inheritance through `--|>` symbol, association through `--` and containment through `..` symbols. The AccessPermissions and Ancestor are used as Association Class.

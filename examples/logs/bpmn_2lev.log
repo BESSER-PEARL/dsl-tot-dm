@@ -1,0 +1,915 @@
+INFO:tree_of_thought.search:Input:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+INFO:tree_of_thought.search:Tree Level # 1
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for BPMN workflow diagram that creates a domain model from a given description:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+Your task is to generate a list of Nodes: 
+You identify the nodes for the BPMN diagram. 
+Each node includes an id, label.
+The node types for the model are: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join, Start-Node, End-Node.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+
+
+Your output is a new proposal that meets the following format:
+
+Nodes: 
+The Nodes here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for BPMN workflow diagram and decides which choice is the best model.
+You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. There is only one Start-Node and one End-Node.
+2. The nodes proposed are of type: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join.
+
+The domain description is:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+
+Choice 1:
+Nodes:
+1. Start-Node: {id: 1, label: "Start Process Order"}
+2. Task: {id: 2, label: "Process Order"}
+3. XOR-Split: {id: 3, label: "Check Stock"}
+4. Task: {id: 4, label: "Check Stock"}
+5. XOR-Join: {id: 5, label: "Decision Point"}
+6. XOR-Split: {id: 6, label: "Decision to Confirm or Reject Order"}
+7. Task: {id: 7, label: "Confirm Order"}
+8. End-Node: {id: 8, label: "End Confirmed Order"}
+9. Task: {id: 9, label: "Reject Order"}
+10. End-Node: {id: 10, label: "End Rejected Order"}
+11. PAR-Split: {id: 11, label: "Ship Items"}
+12. Task: {id: 12, label: "Ship Items"}
+13. PAR-Join: {id: 13, label: "Synchronization Point"}
+
+Choice 2:
+Nodes: 
+1. {id: 1, label: "Start-Node", type: "Start-Node"}
+2. {id: 2, label: "Process Order", type: "Task"}
+3. {id: 3, label: "XOR-Split", type: "XOR-Split"}
+4. {id: 4, label: "Check Stock", type: "Task"}
+5. {id: 5, label: "Ship Items", type: "Task"}
+6. {id: 6, label: "XOR-Join", type: "XOR-Join"}
+7. {id: 7, label: "PAR-Split", type: "PAR-Split"}
+8. {id: 8, label: "Confirm Order", type: "Task"}
+9. {id: 9, label: "Reject Order", type: "Task"}
+10. {id: 10, label: "PAR-Join", type: "PAR-Join"}
+11. {id: 11, label: "End-Node", type: "End-Node"}
+
+Choice 3:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split'}
+4. {id: 4, label: 'Check Stock', type: 'Task'}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join'}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split'}
+7. {id: 7, label: 'Ship Items', type: 'Task'}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join'}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split'}
+10. {id: 10, label: 'Confirm Order', type: 'Task'}
+11. {id: 11, label: 'Reject Order', type: 'Task'}
+12. {id: 12, label: 'end', type: 'End-Node'}
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Choice 1 proposes a model that includes all the components of the process, however, it contains two end nodes which is against the condition that there should only be one End-Node. It also lacks the attribute specifying the type of each node.
+
+Choice 2 lacks the second XOR-Split before the tasks Confirm Order and Reject Order. Furthermore, the model does not provide the workflow with a decision point that decides whether to confirm or reject the order after checking the stock.
+
+Choice 3 offers the most complete and accurate model according to the domain description. It has all necessary tasks and gateways, and correctly models that after checking the stock, either the items are shipped (if available), or the order is confirmed or rejected. Also, it abides by our conditions having exactly one Start-Node and one End-Node and providing the type for each node.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 2:
+ Choice 1 includes all required tasks and gateways. However, it fails to satisfy our criteria as it has two End-Nodes which goes against our first criterion.
+
+Choice 2 correctly uses the required tasks and gateways. However, this choice does not provide a second XOR-Split to distinguish between Confirm Order and Reject Order. In addition, the order of tasks and gateways seems incorrect. After the first XOR-Split, there's no XOR-Join before branching out with a PAR-Split. This could lead to synchronization issues in the workflow. 
+
+Choice 3 includes all necessary tasks and gateways. It also follows the correct order of tasks and gateways and observes synchronization. After the XOR-Split, there is a correct pair of XOR-Join and XOR-Split for the Confirm Order and Reject Order tasks.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 3:
+ Choice 1: This choice does include all the required tasks and gateways such as Process Order, Check Stock, Ship Items, Confirm Order, Reject Order, XOR-Split, XOR-Join, PAR-Split, and PAR-Join. However, it does not adhere to the first criterion of having one Start Node and one End-Node. There are two End-Nodes "End Confirmed Order" and "End Rejected Order", which is not acceptable.
+
+Choice 2: This choice includes all the required tasks and gateways and satisfies the condition of having only one Start Node and one End-Node. However, the names of the nodes are not descriptive. For example, "XOR-Split", "XOR-Join", "PAR-Split", and "PAR-Join" do not provide a clear depiction of what they're doing in the context of this workflow. Therefore, it's hard to discern their functionality from their names here.
+
+Choice 3: This choice includes all the required tasks and gateways such "Process Order", "Check Stock", "Ship Items", "Confirm Order", "Reject Order", "XOR-Split", "XOR-Join", "PAR-Split", and "PAR-Join". It also satisfies the criterion of having only one Start Node and one End-Node. In addition, the naming of the nodes is more context-based (for example "XOR-split2" indicating another decision point), which provides a clearer representation of the workflow.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 4:
+ Choice 1: This model uses correct types of nodes but it has two End-Nodes: "End Confirmed Order" and "End Rejected Order". This violates the first criteria of having only one Start-Node and one End-Node.
+
+Choice 2: This model satisfies all conditions. It uses correct type of nodes: Start-Node, Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join, and End-Node. It should be noted that the nodes do not have a descriptive label, which could cause confusion when using this model.
+
+Choice 3: This model also satisfies all conditions, and each node contains a clear, descriptive label: 'start', 'Process Order', 'XOR-split', 'Check Stock', 'XOR-join', 'PAR-split', 'Ship Items', 'PAR-join', 'XOR-split2', 'Confirm Order', 'Reject Order', 'end'. 
+
+The best choice is 3, as it not only meets all the criteria, but each node also has a descriptive label, which provides a better understanding of the workflow.
+INFO:tree_of_thought.search:Evaluator 5:
+ Analysing the options:
+
+Choice 1: This choice seems to be using valid types of nodes, but it has an issue with criteria 1 which is to have only one Start-Node and one End-Node. It uses two End-Nodes which violates this criteria.
+
+Choice 2: This appears to be correct. It includes only one start-node and one end-node, and it incorporates the tasks and gateways required by the company’s order processing workflow. It uses the valid node types: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join.
+
+Choice 3: This one also seems to be using valid node types. But it essentially does the same thing as choice 2 and doesn't add any improvements or different features.
+
+Upon a meticulous inspection of all three options, it seems that both the second and third options are correct and are equally satisfying the criterias established. However, choice 2 is slightly better in its representation of labels.
+
+The best choice is 2.
+INFO:tree_of_thought.search:Thought 1: 0 votes
+INFO:tree_of_thought.search:Thought 2: 1 votes
+INFO:tree_of_thought.search:Thought 3: 4 votes
+INFO:tree_of_thought.search:Selected thought:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split'}
+4. {id: 4, label: 'Check Stock', type: 'Task'}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join'}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split'}
+7. {id: 7, label: 'Ship Items', type: 'Task'}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join'}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split'}
+10. {id: 10, label: 'Confirm Order', type: 'Task'}
+11. {id: 11, label: 'Reject Order', type: 'Task'}
+12. {id: 12, label: 'end', type: 'End-Node'}
+INFO:tree_of_thought.search:Tree Level # 2
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for BPMN workflow diagram that creates a domain model from a given description:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+Your task is to generate a list of Relationships: 
+For each node id, you propose the connected nodes.
+For the Task node successor and predessor are proposed.
+Nodes of type XOR-Split have one predecessor node and two successor nodes (successor_true, successor_false) and a boolean condition. The successor_true is executed if the condition is true, and the successor_false is executed if the condition is false. 
+Nodes of type XOR-Join have two predecessor nodes (predecessor_true, predecessor_false) and one successor node. The successor gets active after one predecessor is executed. 
+Nodes of type PAR-Split are used to support the parallel execution of tasks. They have one predecessor and two successor nodes (successor_A, successor_B). The successor nodes are executed in parallel.
+Nodes of type PAR-Join have two predecessor nodes (predecessor_A, predecessor_B) and one successor node. The successor node is activated once both predecessors are executed. 
+All node types except for start-node and end-node are optional.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split'}
+4. {id: 4, label: 'Check Stock', type: 'Task'}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join'}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split'}
+7. {id: 7, label: 'Ship Items', type: 'Task'}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join'}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split'}
+10. {id: 10, label: 'Confirm Order', type: 'Task'}
+11. {id: 11, label: 'Reject Order', type: 'Task'}
+12. {id: 12, label: 'end', type: 'End-Node'}
+
+Your output is a new proposal that meets the following format:
+
+Nodes: 
+The Nodes here.
+
+Relationships: 
+The Relationships here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /deployments/gpt-4/chat/completions in 10.000000 seconds
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for BPMN workflow diagram and decides which choice is the best model.
+You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. The relationships specifies the succesor and predecessor.
+2. For types XOR-Split, XOR-Join, PAR-Split, PAR-Join, the successor and predecessor are complete.
+
+The domain description is:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+
+Choice 1:
+Based on the proposed nodes, here is a possible order processing workflow:
+
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split'}
+4. {id: 4, label: 'Check Stock', type: 'Task'}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join'}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split'}
+7. {id: 7, label: 'Ship Items', type: 'Task'}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join'}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split'}
+10. {id: 10, label: 'Confirm Order', type: 'Task'}
+11. {id: 11, label: 'Reject Order', type: 'Task'}
+12. {id: 12, label: 'end', type: 'End-Node'}
+
+Relationships:
+1. {node: 1, successor: 2}
+2. {node: 2, successor: 3, predecessor: 1}
+3. {node: 3, successor_true: 4, successor_false: 5, condition: "Stock available", predecessor: 2}
+4. {node: 4, successor: 5, predecessor: 3}
+5. {node: 5, successor: 6, predecessor_true: 4, predecessor_false: 3}
+6. {node: 6, successor_A: 7, successor_B: 5, predecessor: 5}
+7. {node: 7, successor: 8, predecessor: 6}
+8. {node: 8, successor: 9, predecessor_A: 7, predecessor_B: 5}
+9. {node: 9, successor_true: 10, successor_false: 11, condition: "Order approved", predecessor: 8}
+10. {node: 10, successor: 12, predecessor: 9}
+11. {node: 11, successor: 12, predecessor: 9}
+12. {node: 12, predecessor: 10, 11}
+
+In this proposal, the workflow begins with a 'Process Order' task. The 'XOR-split' then checks if there is sufficient stock. If there is, the 'Check Stock' task is performed and then a 'PAR-split' occurs. 'Ship Items' task and 'XOR-join' are activated in parallel. Once both are completed, a 'XOR-split2' checks if order is approved. If it is, the order is confirmed otherwise it is rejected. Both 'Confirm Order' and 'Reject Order' tasks lead to the workflow end.
+
+Choice 2:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'Check Stock', type: 'Task'}
+4. {id: 4, label: 'XOR-split', type: 'XOR-Split', condition: 'If stock available'}
+5. {id: 5, label: 'Ship Items', type: 'Task'}
+6. {id: 6, label: 'XOR-join', type: 'XOR-Join'}
+7. {id: 7, label: 'PAR-split', type: 'PAR-Split'}
+8. {id: 8, label: 'Confirm Order', type: 'Task'}
+9. {id: 9, label: 'Reject Order', type: 'Task'}
+10. {id: 10, label: 'PAR-join', type: 'PAR-Join'}
+11. {id: 11, label: 'end', type: 'End-Node'}
+
+Relationships:
+1. {id: 1, predecessors:[], successors:[2]}
+2. {id: 2, predecessors:[1], successors:[3]}
+3. {id: 3, predecessors:[2], successors:[4]}
+4. {id: 4, predecessors:[3], successors_true:[5], successors_false:[9], condition: 'Stock is available'}
+5. {id: 5, predecessors:[4], successors:[6]}
+6. {id: 6, predecessors:[5], successors:[7,8]}
+7. {id: 7, predecessors:[6], successors:[10]}
+8. {id: 8, predecessors:[6], successors:[10]}
+9. {id: 9, predecessors:[4], successors:[10]}
+10. {id: 10, predecessors:[7,8,9], successors:[11]}
+11. {id: 11, predecessors:[10], successors:[]}
+
+Choice 3:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split', predecessor: 2, successor_true: 4, successor_false: 5, condition: 'stock'}
+4. {id: 4, label: 'Check Stock', type: 'Task', predecessor: 3, successor: 5}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join', predecessor_true: 3, predecessor_false: 4, successor: 6}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split', predecessor: 5, successor_A: 7, successor_B: 8}
+7. {id: 7, label: 'Ship Items', type: 'Task', predecessor: 6, successor: 8}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join', predecessor_A: 6, predecessor_B: 7, successor: 9}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split', predecessor: 8, successor_true: 10, successor_false: 11, condition: 'approved'}
+10. {id: 10, label: 'Confirm Order', type: 'Task', predecessor: 9, successor: 12}
+11. {id: 11, label: 'Reject Order', type: 'Task', predecessor: 9, successor: 12}
+12. {id: 12, label: 'end', type: 'End-Node', predecessor: [10,11]}
+
+Relationships:
+1. (1,2) Start process order
+2. (2,3) XOR-split (based on stock)
+3. (3,4) Check stock if true
+4. (4,5) XOR-join
+5. (3,5) Skip check stock if false
+6. (5,6) PAR-split
+7. (6,7) Ship items
+8. (7,8) PAR-join
+9. (6,8) Finish other parallel task
+10. (8,9) XOR-split2 (based on approval)
+11. (9,10) Confirm order if true
+12. (9,11) Reject order if false
+13. (10,12) End
+14. (11,12) End
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Choice 1 is the best model for the company's order processing workflow.
+
+This model accurately reflects the sequence of processing events specified in the domain description. In particular, it begins with a 'Process Order' task (just as specified) and ends either with a 'Confirm Order' or 'Reject Order' task. The 'XOR-Split' node clearly specifies the condition under which it would proceed to the 'Check Stock' task and the different successors and predecessors are also properly defined. Moreover, this model incorporates the 'XOR-Join', 'PAR-Split', and 'PAR-Join' nodes that allow for parallel task completion and decision synchronization.
+
+The 'Ship Items' task, another requirement mentioned in the description, is accounted for - it's executed in parallel with the 'XOR-join' after the 'Check Stock' task (conditional on the availability of stock). Furthermore, this model ends appropriately with the confirmation or rejection of the processed order.
+
+Choice 2 lacks in showing a second XOR-Split decision point unlike the other choices, occurs after the parallel gateway where the order is either confirmed or rejected.
+
+On the other hand, although Choice 3 complies with most of the conditions specified in the domain description, it assumes that the 'Ship Items' task would directly follow the 'PAR-split, which could be a significant oversight depending upon the exact process workflow of the order processing.
+
+Given this analysis, Choice 1 is the most suitable BPMN domain model for the company's order processing workflow. 
+
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 2:
+ In choice 1, the flow starts with the 'Process Order' and then checks if the stock is available using the 'XOR-split'. However, the 'XOR-split' incorrectly has two successors, which is not allowed. Instead, it should have two conditional branches. Also, the predecessor and successor for the 'XOR-Join' is incorrect as the predecessor_false is the XOR-Split instead of the 'Check Stock' task.
+
+The transition in choice 2 is slightly more suitable. The order process gets started, checks the stock and based on whether stock is available or not, it proceeds to either 'Ship items' or rejects the order. Yet, there is a problem as after 'XOR-Join' it has two successors which is invalid.
+
+Choice 3 describes the order processing workflow accurately. It properly begins with a 'Process Order' task followed by a 'XOR-split' which is based on whether the stock is available. Depending on the condition, it further proceeds to 'Check Stock' or 'XOR-Join'. The 'PAR-Split' correctly has two successors and both 'Confirm Order' and 'Reject Order' lead to the workflow ending at 'End-Node'. This choice reflects the correct successor and predecessor relationships and also abides by the XOR-Split, XOR-Join, PAR-Split, PAR-Join complete rules.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 3:
+ Choice 1 does correctly model the order processing workflow as described in the domain description. It correctly starts with a 'Process Order' task and ends with either a 'Confirm Order' or 'Reject Order' task. It also includes an appropriate use of XOR and PAR gateways, including a condition check at each XOR-Split. The relationships between the nodes, including the predecessors and successors, are also correctly specified.
+
+Choice 2 also models the order processing workflow accurately. However, it is lacking in its usage of the PAR-Split and PAR-Join. The relationships between the nodes are correctly specified, and the condition is correctly placed at the XOR-Split. However, the PAR-Split sends to two nodes 'Reject Order' and 'Confirm Order' which are not meant to be executed at the same time, this is a flaw in this model. 
+
+Choice 3 correctly models the order processing workflow as well, and it specifies the relationships well and the conditions on the XOR-Split nodes. But unlike Choice 1, it places the condition directly on the XOR-Split node itself rather than inside a relationship. It also however does not clearly state the condition description, leaving it unclear as to what the condition is expecting.
+
+Taking all these considerations into account, choice 1 proves to be the best model. 
+
+The best choice is 1.
+INFO:tree_of_thought.search:Evaluator 4:
+ After analyzing each choice, it comes out that all the three choices considered here meet the criteria for correct modeling of a BPMN (Business Process Model and Notation) domain. However, let's analyze to see which is the best.
+
+In choice 1, the execution path is clear and every node has a properly defined predecessor and successor. It also has the all necessary tasks and gateways included, and relationships are well defined between each node. The conditional operations are well represented by XOR-Split and are also handled well.
+
+In choice 2, the representation is really concise but it does not specify predecessors and successors separately according to if conditions for XOR-Join. As a result, it is might not very clear which path should be followed under what conditions.
+
+In choice 3, the relationships are well represented and the conditions are handled properly. The model clearly shows both the successor and predecessor nodes for every operation, making it easier to understand the workflow.
+
+Given these points, although all the choices are correct, choice 3 gives a more clear understanding of the workflow comparing between the predecessor and successor nodes with well defined conditions due to this reason choice 3 could be the best choice.
+
+Thus, The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 5:
+ Choice 1 is a good model as it fulfills all the workflow requirements in the domain description. However, node 6's relationship is incorrect because 'XOR-join' cannot be a successor of 'PAR-split'. Additionally, node 12's predecessor is assumed to be from either node 10 or node 11, though this is not explicitly stated. 
+
+Choice 2 has an incorrect relationship at node 6. Instead of an 'XOR-Join', it should be a 'PAR-join' because both 'Confirm Order' and 'Reject Order' can't run in parallel. The model fails to properly handle the divergence and convergence of branches in the workflow.
+
+Choice 3 accurately models the order processing workflow by properly handling XOR and PAR gateways and maintaining appropriate predecessor and successor relationships. The predecessor and successor details make the process flow very clear, with both parallel and diverging pathways. Also, the condition for branching decisions is clearly mentioned.
+
+The best choice is 3.
+INFO:tree_of_thought.search:Thought 1: 2 votes
+INFO:tree_of_thought.search:Thought 2: 0 votes
+INFO:tree_of_thought.search:Thought 3: 3 votes
+INFO:tree_of_thought.search:Selected thought:
+Nodes:
+1. {id: 1, label: 'start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'XOR-split', type: 'XOR-Split', predecessor: 2, successor_true: 4, successor_false: 5, condition: 'stock'}
+4. {id: 4, label: 'Check Stock', type: 'Task', predecessor: 3, successor: 5}
+5. {id: 5, label: 'XOR-join', type: 'XOR-Join', predecessor_true: 3, predecessor_false: 4, successor: 6}
+6. {id: 6, label: 'PAR-split', type: 'PAR-Split', predecessor: 5, successor_A: 7, successor_B: 8}
+7. {id: 7, label: 'Ship Items', type: 'Task', predecessor: 6, successor: 8}
+8. {id: 8, label: 'PAR-join', type: 'PAR-Join', predecessor_A: 6, predecessor_B: 7, successor: 9}
+9. {id: 9, label: 'XOR-split2', type: 'XOR-Split', predecessor: 8, successor_true: 10, successor_false: 11, condition: 'approved'}
+10. {id: 10, label: 'Confirm Order', type: 'Task', predecessor: 9, successor: 12}
+11. {id: 11, label: 'Reject Order', type: 'Task', predecessor: 9, successor: 12}
+12. {id: 12, label: 'end', type: 'End-Node', predecessor: [10,11]}
+
+Relationships:
+1. (1,2) Start process order
+2. (2,3) XOR-split (based on stock)
+3. (3,4) Check stock if true
+4. (4,5) XOR-join
+5. (3,5) Skip check stock if false
+6. (5,6) PAR-split
+7. (6,7) Ship items
+8. (7,8) PAR-join
+9. (6,8) Finish other parallel task
+10. (8,9) XOR-split2 (based on approval)
+11. (9,10) Confirm order if true
+12. (9,11) Reject order if false
+13. (10,12) End
+14. (11,12) End
+INFO:tree_of_thought.search:Input:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+INFO:tree_of_thought.search:Tree Level # 1
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for BPMN workflow diagram that creates a domain model from a given description:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+Your task is to generate a list of Nodes: 
+You identify the nodes for the BPMN diagram. 
+Each node includes an id, label.
+The node types for the model are: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join, Start-Node, End-Node.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+
+
+Your output is a new proposal that meets the following format:
+
+Nodes: 
+The Nodes here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for BPMN workflow diagram and decides which choice is the best model.
+You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. There is only one Start-Node and one End-Node.
+2. The nodes proposed are of type: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join.
+
+The domain description is:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+
+Choice 1:
+Nodes: 
+1. { id: 1, label: "Process Order", type: "Start-Node" }
+2. { id: 2, label: "Check Stock", type: "Task" }
+3. { id: 3, label: "Ship Items", type: "Task" }
+4. { id: 4, label: "XOR-Split", type: "XOR-Split" }
+5. { id: 5, label: "Confirm Order", type: "End-Node" }
+6. { id: 6, label: "Reject Order", type: "End-Node" }
+7. { id: 7, label: "XOR-Join", type: "XOR-Join" }
+8. { id: 8, label: "PAR-Split", type: "PAR-Split" }
+9. { id: 9, label: "PAR-Join", type: "PAR-Join" }
+
+Choice 2:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'Check Stock', type: 'Task'}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split'}
+5. {id: 5, label: 'Ship Items', type: 'Task'}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join'}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node'}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join'}
+9. {id: 9, label: 'Reject Order', type: 'End-Node'},
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split'}
+
+Choice 3:
+Nodes: 
+
+1. {id: 1, label: 'Process Order', type: 'Start-Node'}
+2. {id: 2, label: 'Check Stock', type: 'Task'}
+3. {id: 3, label: 'Decision Point', type: 'XOR-Split'}
+4. {id: 4, label: 'Ship Items', type: 'Task'}
+5. {id: 5, label: 'Synchronization Point', type: 'PAR-Join'}
+6. {id: 6, label: 'Confirm Order', type: 'End-Node'}
+7. {id: 7, label: 'Reject Order', type: 'End-Node'}
+8. {id: 8, label: 'Gateway', type: 'PAR-Split'}
+9. {id: 9, label: 'Merge Point', type: 'XOR-Join'}
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /deployments/gpt-4/chat/completions in 3.000000 seconds
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Choice 1 may be close to the requirement, but it has two End-Nodes, which contradicts the first criterion. 
+
+Choice 2 seems to be correct except for one important issue. Upon reviewing, it also contains two End-Nodes, which conflicts with our guidelines for a BPMN diagram. 
+
+Choice 3 fits our requirements perfectly. It contains a single Start-Node ('Process Order') and a single End-Node ('Confirm Order' or 'Reject Order'). The nodes are of the correct types including 'Task', 'XOR-Split', 'XOR-Join', 'PAR-Split' and 'PAR-Join'. Each of these nodes has a meaningful role within the workflow model, providing a comprehensive map of the order processing workflow. 
+
+The best choice is 3.
+INFO:tree_of_thought.search:Evaluator 2:
+ Analyzing choice 1, it contains sufficient nodes and task details, but there are two "End-Nodes" which violates criterion 1. This results in an ambiguous diagram where it might be unclear where the workflow ends.
+
+Analyzing choice 2, it satisfies criterion 1 since it only contains one Start-Node and one End-Node. Also, the use of task specific labels like "XOR-Split-for-Order-Checking" and "PAR- Join-for-Shipping" seems to make the workflow more comprehensible. However, it also has an extra end-node "Reject Order", which makes the ending ambiguous.
+
+Analyzing choice 3, it meets criterion 1 by including one Start-Node and one End-Node, and all nodes proposed are of required type, satisfying criterion 2. However, the labels such as "Decision Point", "Synchronization Point", "Gateway", and "Merge Point" might be a bit abstract and harder to understand.
+
+Comparing all choices, choice 2 captures all necessary tasks and gateways, but makes the diagram ending clear by including only one end-node, thus making the workflow more comprehensible. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 3:
+ Looking at choice 1, it correctly features a single start node and end nodes, but it incorrectly presents two different end nodes, "Confirm Order" and "Reject Order". This breaks the rule that there should only be one end node in a BPMN model. It also doesn't clearly define connections and relationships between tasks.
+
+Observed choice 2, it accurately represents a single start node and it solves the problem with the end nodes seen in choice 1 by using "XOR-Join-for-Order-Confirmation" to converge the "Confirm Order" and "Reject Order" branches back into a single end node. The labeling is more descriptive, which can aid in understanding the model. This model, however, appears to have two End-Nodes, which contradicts the rule that there should just be a single End-Node. 
+
+Now looking at choice 3, it also correctly represents the start and end nodes. It uses more generic labels for the gateways, which aren't as descriptive as those in choice 2 but still effectively represent the function of each node. This model seems to feature both "Confirm Order" and "Reject Order" as End-Nodes, which again contradicts the rule needing a single End-Node only.
+
+Based on these observations, none of the options fully comply with the set requirements, as all options feature more than just one End-Node. If forced to choose the best among these, I'd go with choice 2 because it does a decent job at describing the process and gateways, despite the dual end nodes. 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 4:
+ Looking at Choice 1, it almost meets the requirements, with one issue of having two End-Nodes, when we actually require just one. Although the model includes all the necessary tasks, it fails in satisfying our first criteria. 
+
+Choice 2 seems correct, including all the necessary tasks and gateway types. However, like Choice 1, it also has two End-Nodes which makes it incorrect according to our first criteria.
+
+Examining Choice 3, we can see that it only has one Start and End-Node and also includes all tasks stated. Also it using exclusive and parallel gateways correctly with right labels for indicative purposes.
+
+Taking all the information into account, the best choice that meets all requirements is therefore, Choice 3.
+INFO:tree_of_thought.search:Evaluator 5:
+ Looking at choice 1, the structure does meet the requirements, but there are two End-Nodes, which contradicts with the first criteria that there should only be one Start-Node and End-Node in a BPMN model. 
+
+Choice 2 exhibits clear separation of the process flow and includes all the required tasks. However, just like the first choice, it also has two End-Nodes representing "Confirm Order" and "Reject Order" which contradicts with the first criteria. 
+
+Finally, choice 3 includes all types of nodes required, but also uses a single End-Node which complies with the criteria. However, the node labels are somewhat ambiguous and not as descriptive as they could be.
+
+Considering all the given information, none of the choices fits perfectly. However, The best choice is 3, because it meets the criteria better compared to the other two choices, despite having somewhat ambiguous labels for some nodes.
+INFO:tree_of_thought.search:Thought 1: 0 votes
+INFO:tree_of_thought.search:Thought 2: 2 votes
+INFO:tree_of_thought.search:Thought 3: 2 votes
+INFO:tree_of_thought.search:Selected thought:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'Check Stock', type: 'Task'}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split'}
+5. {id: 5, label: 'Ship Items', type: 'Task'}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join'}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node'}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join'}
+9. {id: 9, label: 'Reject Order', type: 'End-Node'},
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split'}
+INFO:tree_of_thought.search:Tree Level # 2
+INFO:tree_of_thought.search:Generator prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for BPMN workflow diagram that creates a domain model from a given description:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+Your task is to generate a list of Relationships: 
+For each node id, you propose the connected nodes.
+For the Task node successor and predessor are proposed.
+Nodes of type XOR-Split have one predecessor node and two successor nodes (successor_true, successor_false) and a boolean condition. The successor_true is executed if the condition is true, and the successor_false is executed if the condition is false. 
+Nodes of type XOR-Join have two predecessor nodes (predecessor_true, predecessor_false) and one successor node. The successor gets active after one predecessor is executed. 
+Nodes of type PAR-Split are used to support the parallel execution of tasks. They have one predecessor and two successor nodes (successor_A, successor_B). The successor nodes are executed in parallel.
+Nodes of type PAR-Join have two predecessor nodes (predecessor_A, predecessor_B) and one successor node. The successor node is activated once both predecessors are executed. 
+All node types except for start-node and end-node are optional.
+
+To generate a new proposal, you apply some changes to the proposal below and then return the modified elements:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'Check Stock', type: 'Task'}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split'}
+5. {id: 5, label: 'Ship Items', type: 'Task'}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join'}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node'}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join'}
+9. {id: 9, label: 'Reject Order', type: 'End-Node'},
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split'}
+
+Your output is a new proposal that meets the following format:
+
+Nodes: 
+The Nodes here.
+
+Relationships: 
+The Relationships here.
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator prompt: 
+You are a domain modelling expert for BPMN workflow diagram and decides which choice is the best model.
+You Analyze each choice in detail, then conclude in the last line "The best choice is {s}", where s the integer id of the choice.
+You always pay extra attention at the following criterias:
+
+1. The relationships specifies the succesor and predecessor.
+2. For types XOR-Split, XOR-Join, PAR-Split, PAR-Join, the successor and predecessor are complete.
+
+The domain description is:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+
+Choice 1:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'Check Stock', type: 'Task', predecessor: 2, successor: 4}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split', predecessor: 3, successor_true: 5, successor_false: 9, condition: 'Stock Available'}
+5. {id: 5, label: 'Ship Items', type: 'Task', predecessor: 4, successor: 10}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join', predecessor_A: 5, predecessor_B: 10, successor: 8}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node', predecessor: 8}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join', predecessor_true: 6, predecessor_false: 4, successor: 7}
+9. {id: 9, label: 'Reject Order', type: 'End-Node', predecessor: 4}
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split', predecessor: 5, successor_A: 5, successor_B: 6}
+
+Relationships: 
+
+1. 1-s2
+2. s2-3
+3. 3-4
+4. 4-5 (condition: 'Stock Available')
+5. 4-9 (condition: 'Stock not Available')
+6. 5-10
+7. 10-5
+8. 10-6
+9. 6-8
+10. 8-7
+
+Choice 2:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task'}
+3. {id: 3, label: 'Check Stock', type: 'Task'}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split', condition: 'Stock Available or not'}
+5. {id: 5, label: 'Ship Items', type: 'Task'}
+6. {id: 6, label: 'PAR-Split-for-Shipping', type: 'PAR-Split'}
+7. {id: 7, label: 'PAR- Join-for-Shipping', type: 'PAR-Join'}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join'}
+9. {id: 9, label: 'Confirm Order', type: 'End-Node'}
+10. {id: 10, label: 'Reject Order', type: 'End-Node'}
+
+
+Relationships:
+
+1. Start-Node (id = 1) -> Process Order (id = 2)
+2. Process Order (id = 2) -> Check Stock (id = 3)
+3. Check Stock (id = 3) -> XOR-Split-for-Order-Checking (id = 4)
+4. XOR-Split-for-Order-Checking (id = 4) -> Ship Items (condition: Stock Available) (id = 5)
+5. XOR-Split-for-Order-Checking (id = 4) -> Reject Order (condition: Not Available) (id = 10)
+6. Ship Items (id = 5) -> PAR-Split-for-Shipping (id = 6)
+7. PAR-Split-for-Shipping (id = 6) -> PAR- Join-for-Shipping (id = 7)
+8. PAR- Join-for-Shipping (id = 7) -> XOR-Join-for-Order-Confirmation (id = 8)
+9. XOR-Join-for-Order-Confirmation (id = 8) -> Confirm Order (id = 9)
+10. XOR-Join-for-Order-Confirmation (id = 8) -> Reject Order (id = 10)
+
+Choice 3:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'Check Stock', type: 'Task', predecessor: 2, successor: 4}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split', predecessor: 3, successor_true: 5, successor_false: 9, condition: 'stock_available'}
+5. {id: 5, label: 'Ship Items', type: 'Task', predecessor: 4, successor: 6}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join', predecessor_A: 5, predecessor_B: 10, successor: 8}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node', predecessor: 8}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join',  predecessor_true:6, predecessor_false:9, successor: 7}
+9. {id: 9, label: 'Reject Order', type: 'End-Node', predecessor: 4}
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split', predecessor: 4, successor_A: 5, successor_B: 6}
+
+Relationships:
+
+1. {'id': 1, 'Successor': 2} 
+2. {'id': 2, 'Predecessor': 1, 'Successor': 3}
+3. {'id': 3, 'Predecessor': 2, 'Successor': 4}
+4. {'id': 4, 'Predecessor': 3, 'Successor_true': 5, 'Successor_false': 9, 'Condition': 'stock_available'}
+5. {'id': 5, 'Predecessor': 4, 'Successor': 6}
+6. {'id': 6, 'Predecessor_A': 5, 'Predecessor_B': 10, 'Successor': 8}
+7. {'id': 7, 'Predecessor': 8}
+8. {'id': 8, 'Predecessor_true': 6, 'Predecessor_false': 9, 'Successor': 7}
+9. {'id': 9, 'Predecessor': 4}
+10. {'id': 10, 'Predecessor': 4, 'Successor_A':5 , 'Successor_B': 6}
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:tree_of_thought.search:Evaluator 1:
+ Looking at the first criteria, all of the choices have explicitly defined relationships between tasks, processes, and decisions in their domain models. 
+
+On the second criteria, the challenge here is to properly represent the XOR and PAR types. These types have specific requirements for specifying predecessors and successors. Let's analyze each choice.
+
+The first choice depicts the relationships and connections completely. The XOR-Split and XOR-Join gateways and PAR-Split and PAR-Join gateways have defined the predecessor and successor properly. 
+
+The second choice is incomplete and not explicit in all cases. The successor and predecessor are not specified within the nodes and it only mentions the type of relationship in an abstract manner. It is missing the necessary details, such as the task id, to construct a BPMN diagram. 
+
+The third choice has a problem. For the id: 10, it has the predecessor as 4 (XOR-Split-for-Order-Checking), which should be the 5 (Ship Items). 
+
+The best choice is 1. This model fulfills the criteria perfectly. The relationships clearly specify the predecessor and successor. For the XOR-Split, XOR-Join, PAR-Split, PAR-Join types, the successor and predecessor are complete and correctly pointed. The model provides enough details for the processing of an order - from placing the order, checking the stock, to confirming or rejecting the order.
+INFO:tree_of_thought.search:Evaluator 2:
+ When comparing all choices, Choice 1 and Choice 3 are pretty similar and both provide a comprehensive modelling of the order processing workflow. Both include detailed and complete nodes and relationships, covering all necessary tasks, gateway types, conditions and define predecessors and successors for each node clearly. 
+
+However, Choice 1 has a minor error in successor_A of the node with id: 10, which makes a loop between node 5 and 10 that might cause infinite processing. This critical error could potentially derail the entire workflow.
+
+On the other hand, Choice 2 lacks crucial information as it does not specify successor and predecessor in its nodes which makes it incomplete and could potentially lead to confusion in understanding the real flow of the process.
+
+In conclusion, the best choice is 3 because of its completeness and correctness in relation with the criterion of this domain modeling task. The nodes and relationships in this choice are stated with the right attributes and connections, also taking care of the XOR and PAR splits and joins, ensuring no misunderstanding in the workflow visualization. Choice 3 also covers all necessary tasks in order processing workflow from processing the order until confirming or rejecting it. This model is the most reliable among all choices for mapping an order processing workflow visually with BPMN.
+INFO:tree_of_thought.search:Evaluator 3:
+ Choice 1 and 3 models have very similar node designs, with a few minor differences. The successor and predecessor are accurately defined for each node, properly obeying the criteria. All nodes that should have these attributes do, and this helps to clearly specify the sequence of tasks. However, in Choice 3, the PAR-Split has correct successors, but in choice 1, PAR-Split-for-Shipping node with id 10 has the same task with id 5 Ship items as predecessor and successor which is not logical. 
+
+Choice 2 does not define predecessors and successors for each node, failing to meet the criteria. 
+
+The XOR-Split and XOR-Join are executed correctly in each of the three models: For XOR-Split, two outcomes are defined based on a condition, deciding the successor; For XOR-Join, two potential predecessors are specified, deciding the outcome of the join.
+
+However, in Choice 1 and 3, the PAR-Join and PAR-Split gateways are not fully and correctly modeled. In Choice 3, there's no node between PAR-split and PAR-join, which should not be the case. Parallel tasks are supposed to run in parallel after a PAR-Split, and then be joined at a PAR-Join. But in the choice 3, the parallel tasks are not correctly represented.
+In Choice 1, the PAR-Split-for-Shipping node with id 10 has the same task 'Ship Items' (id: 5) as a predecessor and a successor which is a loop and not making sense in the workflow.
+Choice 2 seems to fit this criteria, where a PAR-Split follows Ship Items, diverting the task flow into two parallel tasks that eventually reconnect at a PAR-Join.
+
+After taking all of these points into consideration, it can be concluded that: 
+
+The best choice is 2.
+INFO:tree_of_thought.search:Evaluator 4:
+ Looking at the provided BPMN workflow choices in detail, it appears that the first choice wrongly states the predecessor of the 'PAR-Split-for-Shipping' node (ID 10) as 'Ship Items' (ID 5) instead of 'Check Stock' (ID 3). Also, the successor nodes are cycled back to 'Ship Items' (ID 5) and 'PAR- Join-for-Shipping' (ID 6) again, which doesn't make sense.
+
+In the second choice, although it outlines each required task, rates, and decision points correctly, it fails to provide predecessor and successor relationships for each node as specified in our criteria. 
+
+On the contrary, the third choice correctly outlines all the tasks from 'Process Order' to 'Confirm Order'/'Reject Order'. It provides accurate predecessors and successors for each node, and it properly handles XOR and PAR gateways with complete predecessors and successors. This workflow execution path logically makes sense as well.
+
+Hence, considering all these factors, the best choice is 3.
+INFO:tree_of_thought.search:Evaluator 5:
+ Choice 1 is incorrect because it shows both a 'PAR-Split-for-Shipping' and a 'Ship Items' task as predecessor of 'PAR- Join-for-Shipping'. On a PAR-Join, there should be one and only one predecessor. Moreover, 'Ship Items' and 'PAR-Split-for-Shipping' both have the id 5 which is incorrect as it leads to an infinite loop.
+
+Choice 2 is incorrect as it fails to show the predecessor and successor relationships between nodes. This information is crucial in a BPMN model in order to correctly display the flow of the processes. 
+
+Choice 3 correctly identifies not only the processes involved in the order processing workflow, but also the relationships between them. it has all nodes and relationships as per the domain requirement and representing XOR-Split, XOR-Join, PAR-Split, PAR-Join with successors and predecessors which are complete and accurate. 
+
+The best choice is 3.
+INFO:tree_of_thought.search:Thought 1: 1 votes
+INFO:tree_of_thought.search:Thought 2: 1 votes
+INFO:tree_of_thought.search:Thought 3: 3 votes
+INFO:tree_of_thought.search:Selected thought:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'Check Stock', type: 'Task', predecessor: 2, successor: 4}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split', predecessor: 3, successor_true: 5, successor_false: 9, condition: 'stock_available'}
+5. {id: 5, label: 'Ship Items', type: 'Task', predecessor: 4, successor: 6}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join', predecessor_A: 5, predecessor_B: 10, successor: 8}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node', predecessor: 8}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join',  predecessor_true:6, predecessor_false:9, successor: 7}
+9. {id: 9, label: 'Reject Order', type: 'End-Node', predecessor: 4}
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split', predecessor: 4, successor_A: 5, successor_B: 6}
+
+Relationships:
+
+1. {'id': 1, 'Successor': 2} 
+2. {'id': 2, 'Predecessor': 1, 'Successor': 3}
+3. {'id': 3, 'Predecessor': 2, 'Successor': 4}
+4. {'id': 4, 'Predecessor': 3, 'Successor_true': 5, 'Successor_false': 9, 'Condition': 'stock_available'}
+5. {'id': 5, 'Predecessor': 4, 'Successor': 6}
+6. {'id': 6, 'Predecessor_A': 5, 'Predecessor_B': 10, 'Successor': 8}
+7. {'id': 7, 'Predecessor': 8}
+8. {'id': 8, 'Predecessor_true': 6, 'Predecessor_false': 9, 'Successor': 7}
+9. {'id': 9, 'Predecessor': 4}
+10. {'id': 10, 'Predecessor': 4, 'Successor_A':5 , 'Successor_B': 6}
+INFO:dsl.prompts:Notation prompt: 
+Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.
+You are a domain modeling expert for BPMN workflow diagram that creates a domain model from a given description:
+Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks.
+
+You use the thoughts below to return the specified domain model:
+Nodes:
+
+1. {id: 1, label: 'Start', type: 'Start-Node'}
+2. {id: 2, label: 'Process Order', type: 'Task', predecessor: 1, successor: 3}
+3. {id: 3, label: 'Check Stock', type: 'Task', predecessor: 2, successor: 4}
+4. {id: 4, label: 'XOR-Split-for-Order-Checking', type: 'XOR-Split', predecessor: 3, successor_true: 5, successor_false: 9, condition: 'stock_available'}
+5. {id: 5, label: 'Ship Items', type: 'Task', predecessor: 4, successor: 6}
+6. {id: 6, label: 'PAR- Join-for-Shipping', type: 'PAR-Join', predecessor_A: 5, predecessor_B: 10, successor: 8}
+7. {id: 7, label: 'Confirm Order', type: 'End-Node', predecessor: 8}
+8. {id: 8, label: 'XOR-Join-for-Order-Confirmation', type: 'XOR-Join',  predecessor_true:6, predecessor_false:9, successor: 7}
+9. {id: 9, label: 'Reject Order', type: 'End-Node', predecessor: 4}
+10. {id: 10, label: 'PAR-Split-for-Shipping', type: 'PAR-Split', predecessor: 4, successor_A: 5, successor_B: 6}
+
+Relationships:
+
+1. {'id': 1, 'Successor': 2} 
+2. {'id': 2, 'Predecessor': 1, 'Successor': 3}
+3. {'id': 3, 'Predecessor': 2, 'Successor': 4}
+4. {'id': 4, 'Predecessor': 3, 'Successor_true': 5, 'Successor_false': 9, 'Condition': 'stock_available'}
+5. {'id': 5, 'Predecessor': 4, 'Successor': 6}
+6. {'id': 6, 'Predecessor_A': 5, 'Predecessor_B': 10, 'Successor': 8}
+7. {'id': 7, 'Predecessor': 8}
+8. {'id': 8, 'Predecessor_true': 6, 'Predecessor_false': 9, 'Successor': 7}
+9. {'id': 9, 'Predecessor': 4}
+10. {'id': 10, 'Predecessor': 4, 'Successor_A':5 , 'Successor_B': 6}
+You create the Model: 
+Propose a domain model with the following structure in JSON format.
+    "WorkflowModel": 
+        "start-Node": 
+            "id": "S1"
+        ,
+        "end-node": 
+            "id": "E1"
+        ,
+        "tasks": [
+            
+                "id": "T1",
+                "label": "File Claim",
+                "successor": "T2",
+                "predecessor": "S1"
+            ,
+            
+                "id": "T2",
+                "label": "Check Claim",
+                "successor": "XS1",
+                "predecessor": "T1"
+            ,
+            
+                "id": "T3",
+                "label": "Issue Reimbursement",
+                "successor": "XJ1",
+                "predecessor": "XS1"
+            ,
+            
+                "id": "T4",
+                "label": "Reject Claim",
+                "successor": "XJ1",
+                "predecessor": "XS1"
+            
+        ],
+        "gateways": [
+            
+                "type": "XOR-Split",
+                "id": "XS1",
+                "condition": "claim valid?",
+                "successor_true": "T3",
+                "successor_false": "T4",
+                "predecessor": "T2"
+            ,
+                "type": "XOR-Join",
+                "id": "XJ1",
+                "predecessor_true": "T3",
+                "predecessor_false": "T4",
+                "successor": "E1"            
+        ]
+
+
+INFO:httpx:HTTP Request: POST https://resunilu.openai.azure.com//openai/deployments/gpt-4/chat/completions?api-version=2024-02-01 "HTTP/1.1 200 OK"
+INFO:dsl.prompts:Model notation:
+"WorkflowModel": 
+    "start-Node": 
+        "id": "1",
+        "label": "Start"
+    ,
+    "end-node": [
+        {
+            "id": "7",
+            "label": "Confirm Order",
+            "predecessor": "8"
+        },
+        {
+            "id": "9",
+            "label": "Reject Order",
+            "predecessor": "4"
+        }
+    ],
+    "tasks": [
+        
+            "id": "2",
+            "label": "Process Order",
+            "successor": "3",
+            "predecessor": "1"
+        ,
+        
+            "id": "3",
+            "label": "Check Stock",
+            "successor": "4",
+            "predecessor": "2"
+        ,
+        
+            "id": "5",
+            "label": "Ship Items",
+            "successor": "6",
+            "predecessor": "4"
+        ,
+        
+            "id": "10",
+            "label": "PAR-Split-for-Shipping",
+            "successor_A": "5",
+            "successor_B": "6",
+            "predecessor": "4"
+        
+    ],
+    "gateways": [
+        
+            "type": "XOR-Split",
+            "id": "4",
+            "label": "XOR-Split-for-Order-Checking",
+            "condition": "stock_available",
+            "successor_true": "5",
+            "successor_false": "9",
+            "predecessor": "3"
+        ,
+            "type": "PAR-Join",
+            "id": "6",
+            "label": "PAR- Join-for-Shipping",
+            "predecessor_A": "5",
+            "predecessor_B": "10",
+            "successor": "8"
+        ,
+            "type": "XOR-Join",
+            "id": "8",
+            "label": "XOR-Join-for-Order-Confirmation",
+            "predecessor_true": "6",
+            "predecessor_false": "9",
+            "successor": "7"            
+    ]

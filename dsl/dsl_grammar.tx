@@ -1,0 +1,25 @@
+Model:
+    tree = Tree
+    problem = Problem
+    tasks = Task*
+    notation = Notation
+;
+Tree: "tree:" 
+    "levels:" levels=INT
+    "number_samples:" number_samples=INT
+    "number_votes:" number_votes=INT
+;
+Problem: "problem:"
+    "domain:" domain=STRING
+    "purpose:" purpose=STRING
+;
+Task: "task:"
+    "level:" level=INT
+    "name:" name=STRING
+    "description:" description=STRING
+    "assessments:" assessments=STRING*
+;
+Notation: "notation:"
+    "name:" name=STRING
+    "description:" description=STRING
+;

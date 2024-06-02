@@ -1,0 +1,65 @@
+tree: 
+    levels: 5
+    number_samples: 3
+    number_votes: 5
+
+problem: 
+    domain: "./domains/exercise1.txt"
+    purpose: "UML class diagram"
+
+task: 
+    level: 1
+    name: "Classes"
+    description: "You identify only the classes and attributes mentioned. 
+Do not include attributes not mentioned in the description.
+Do not include relationship between classes.
+As a reference, a class represents objects that share a common structure and behavior."
+    assessments:
+        "Classes are retrieved from nouns in the domain description."
+        "The principal concepts of the domain are representend in classes."
+task: 
+    level: 2
+    name: "Association"
+    description: "Propose a list of associations  with cardinalities between classes. 
+Associate: used when a class is related to another."
+    assessments:
+        "Associations and cardinalities are included in the model with correct format."
+task: 
+    level: 3
+    name: "Contain"
+    description: "Propose a list of contain relations between classes. 
+Contain: Is a special kind of association relationship where the contained class exists as part of the containing class.
+For example: The class Car contain Wheel.
+You apply changes to the domain model proposed if an association must be modeled as contain."
+    assessments:
+        "There are no duplicated relationships."
+        "The model uses contain relationship for whole-part relationship."
+task: 
+    level: 4
+    name: "Inheritance"
+    description: "Propose a list of inheritance between classes. 
+Inherit: refers to one class (child class) to inherit the identical functionality of another class (super class).
+For example: The classes Student and Professor inherit from Person.
+You apply changes to the domain model proposed if an association must be modeled as inheritance."
+    assessments:
+        "There are no duplicated relationships."
+        "The model uses inheritance with one super classes and more than one sub classes."               
+task:
+    level: 5
+    name: "Association classes"
+    description: "Identify the association classes in the domain description.
+As a reference, an Association Class connects a set of Classes but also defines a set of Features that belong to the connection itself and not to any of the associated Classes.
+You apply changes to the domain model proposed if an association class has a conflict with other classes or relationships."
+    assessments:
+        "The association classes proposed include attributes."
+
+notation:
+name: "PlantUML code"
+description: 
+"Create the PlantUML code with the format described below:
+First, create the classes with attributes mentioned in the description. Omit methods in classes.
+Second, add contain and associations with its cardinalities. 
+Third, add the inheritance.
+Fourth, create the association classes using the following format:
+(<Source_Class> , <Target_Class>) .. <Association_Class>"
+

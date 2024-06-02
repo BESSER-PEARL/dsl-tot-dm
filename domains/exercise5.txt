@@ -1,0 +1,1 @@
+There are robots that have an id. Robots can be of type cleaning robot and transport robot. Robots can perform tasks, which have an id. When a robot performs a task, the task execution is recorded. A task execution has an id, a start time and a location. The location can be either corridors or rooms.

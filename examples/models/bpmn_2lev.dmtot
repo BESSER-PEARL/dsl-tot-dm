@@ -1,0 +1,88 @@
+tree: 
+    levels: 2
+    number_samples: 3
+    number_votes: 5
+
+problem: 
+    domain: "Create a BPMN (Business Process Model and Notation) domain model for a company's order processing workflow. 
+The company requires a visual representation of the workflow that includes tasks and gateways. 
+The workflow should start with a Process Order task and end with a Confirm Order or Reject Order task. 
+There are also intermediate tasks such as Check Stock and Ship Items that need to be included. 
+Additionally, the workflow includes exclusive (XOR) and parallel (PAR) gateways to represent decision points and synchronization points in the process flow. 
+The gateways should have appropriate conditions and connections to tasks."
+    purpose: "BPMN workflow diagram"
+
+task: 
+    level: 1
+    name: "Nodes"
+    description: "You identify the nodes for the BPMN diagram. 
+Each node includes an id, label.
+The node types for the model are: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join, Start-Node, End-Node."
+    assessments:
+                "There is only one Start-Node and one End-Node."
+                "The nodes proposed are of type: Task, XOR-Split, XOR-Join, PAR-Split, PAR-Join."
+task: 
+    level: 2
+    name: "Relationships"
+    description: "For each node id, you propose the connected nodes.
+For the Task node successor and predessor are proposed.
+Nodes of type XOR-Split have one predecessor node and two successor nodes (successor_true, successor_false) and a boolean condition. The successor_true is executed if the condition is true, and the successor_false is executed if the condition is false. 
+Nodes of type XOR-Join have two predecessor nodes (predecessor_true, predecessor_false) and one successor node. The successor gets active after one predecessor is executed. 
+Nodes of type PAR-Split are used to support the parallel execution of tasks. They have one predecessor and two successor nodes (successor_A, successor_B). The successor nodes are executed in parallel.
+Nodes of type PAR-Join have two predecessor nodes (predecessor_A, predecessor_B) and one successor node. The successor node is activated once both predecessors are executed. 
+All node types except for start-node and end-node are optional."
+    assessments:
+                "The relationships specifies the succesor and predecessor."
+                "For types XOR-Split, XOR-Join, PAR-Split, PAR-Join, the successor and predecessor are complete."
+notation:
+    name: "Model"
+    description: 'Propose a domain model with the following structure in JSON format.
+    "WorkflowModel": 
+        "start-Node": 
+            "id": "S1"
+        ,
+        "end-node": 
+            "id": "E1"
+        ,
+        "tasks": [
+            
+                "id": "T1",
+                "label": "File Claim",
+                "successor": "T2",
+                "predecessor": "S1"
+            ,
+            
+                "id": "T2",
+                "label": "Check Claim",
+                "successor": "XS1",
+                "predecessor": "T1"
+            ,
+            
+                "id": "T3",
+                "label": "Issue Reimbursement",
+                "successor": "XJ1",
+                "predecessor": "XS1"
+            ,
+            
+                "id": "T4",
+                "label": "Reject Claim",
+                "successor": "XJ1",
+                "predecessor": "XS1"
+            
+        ],
+        "gateways": [
+            
+                "type": "XOR-Split",
+                "id": "XS1",
+                "condition": "claim valid?",
+                "successor_true": "T3",
+                "successor_false": "T4",
+                "predecessor": "T2"
+            ,
+                "type": "XOR-Join",
+                "id": "XJ1",
+                "predecessor_true": "T3",
+                "predecessor_false": "T4",
+                "successor": "E1"            
+        ]
+'

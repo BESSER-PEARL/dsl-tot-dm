@@ -1,0 +1,43 @@
+@startuml
+Enum Time{
+  Day
+  Night
+}
+abstract class Person {
+  String name
+}
+class Author {
+}
+class Participant {
+}
+
+class Session {
+  int timeBegin
+  int timeEnd
+}
+class Theater {
+  String Location
+}
+abstract class Play {
+  String name
+  Time time
+}
+class Musical {
+}
+class Opera {
+}
+
+
+
+Play "*" -- "*" Theater : plays
+Author "1..*"  -- "*" Play : writes
+Participant "*" -- "*" Play : acts
+
+Person <|-- Author
+Person <|-- Participant
+Play <|-- Musical
+Play <|-- Opera
+
+(Play , Participant) .. Session
+
+@enduml

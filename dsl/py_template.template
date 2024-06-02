@@ -1,0 +1,43 @@
+# Execution of ToT domain modeling tasks
+from dsl.tree import Tree
+from dsl.prompts import NotationPrompt
+from dsl.modelingProblem import ModelingProblem
+from dsl.modelingTask import ModelingTask
+from dsl.modelNotation import ModelNotation
+
+
+def run():
+    problem = ModelingProblem(levels = {{tree.levels}}, purpose = "{{problem.purpose}}", description = """{{ problem.domain }}""")
+    tree = Tree(number_levels = {{tree.levels}}, generator_samples = {{tree.number_samples}}, evaluator_votes = {{tree.number_votes}})
+    tree.set_input(problem = problem)
+
+    modelingTasks = [''] * ({{tree.levels}})
+    {% for t in tasks %}
+    {% set outer_loop = loop %}
+    modelingTasks[{{t.level - 1}}] = ModelingTask(level = {{t.level}}, name = "{{t.name}}")
+    modelingTasks[{{t.level - 1}}].set_description("""{{t.description}}""")
+    {% for a in t.assessments %}
+    modelingTasks[{{t.level - 1}}].add_assessment("""{{a}}""")
+    {% endfor %}
+    problem.add_task(task = modelingTasks[{{t.level - 1}}])
+    {% endfor %}
+
+    model_notation = ModelNotation(name = "{{notation.name}}", description="""{{notation.description}}""")
+    problem.add_notation(model_notation) 
+    
+    tree.setup_tree()
+    
+    logName = "{{model}}"
+    logName = logName.replace(".dmtot", ".log")
+    output = tree.execute(logName)
+
+    notation = NotationPrompt( purpose = problem.get_purpose(), \
+                domain = problem.get_domain_description(), \
+                thought = output, \
+                notation = problem.get_notation())
+    notation.execute(logName)
+
+    print(f'Tree of thoughts executed for {problem.get_purpose()}, the result is located in {logName}')
+
+if __name__ == '__main__':
+    run()

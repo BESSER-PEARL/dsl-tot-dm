@@ -1,0 +1,3 @@
+For an e-commerce platform customers identified with an ID place orders with multiple products. Each product has a name and description. The products included in the order have important details such as the quantity and price.
+
+Additionally, the platform receives reviews from the customers who purchased the product. Products receives multiple reviews from customers and the review date and rating is tracked. The platform permits the management of promotions, where products can be part of various promotional campaigns. The system stores the details of promotions including discount rates and validity periods.
