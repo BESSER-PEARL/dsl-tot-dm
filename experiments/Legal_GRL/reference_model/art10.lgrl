@@ -1,0 +1,102 @@
+Actor: 
+  name: 'HIC'
+
+IntentionalElement:
+  id: G1
+  name: 'Have Information Practices in Place'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G2
+  name: 'Comply with Information Practices'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G3
+  name: 'Comply with Requirements for Electronic Means'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'Has Custody of PHI'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: P2
+  name: 'Use of Electronic Means for Use, Disclose...'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: T1
+  name: 'Create Information Practice'
+  type: Task
+  modality: Obligation
+
+IntentionalElement:
+  id: T2
+  name: 'Follow Information Practice Steps'
+  type: Task
+  modality: Obligation
+
+IntentionalElement:
+  id: T3
+  name: 'Perform the Prescribed Steps'
+  type: Task
+
+Actor: 
+  name: 'Goods or Service Provider'
+
+IntentionalElement:
+  id: G4
+  name: 'Comply with Prescribed Requirements'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P3
+  name: 'Provides Goods or Services To Enable HIC to Use Electronic MeanS'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: T4
+  name: 'Performed the Required Steps'
+  type: Task
+  modality: Obligation
+
+Dependency:
+  source: P1
+  target: G1
+
+Dependency:
+  source: P2
+  target: G3
+
+Dependency:
+  source: P3
+  target: G4
+
+Decomposition:
+  source: G1
+  target: T2
+  decompositionType: AND
+
+Decomposition:
+  source: G2
+  target: T3
+  decompositionType: AND
+
+Decomposition:
+  source: G3
+  target: T1
+  decompositionType: AND
+
+Decomposition:
+  source: G4
+  target: T4
+  decompositionType: AND

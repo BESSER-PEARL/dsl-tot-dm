@@ -7,7 +7,7 @@ from dsl.modelNotation import ModelNotation
 
 
 def run():
-    problem = ModelingProblem(levels = {{tree.levels}}, purpose = "{{problem.purpose}}", description = """{{ problem.domain }}""")
+    problem = ModelingProblem(levels = {{tree.levels}}, purpose = """{{problem.purpose}}""", description = """{{ problem.domain }}""")
     tree = Tree(number_levels = {{tree.levels}}, generator_samples = {{tree.number_samples}}, evaluator_votes = {{tree.number_votes}})
     tree.set_input(problem = problem)
 
@@ -22,20 +22,24 @@ def run():
     problem.add_task(task = modelingTasks[{{t.level - 1}}])
     {% endfor %}
 
+    {% if notation:%}
     model_notation = ModelNotation(name = "{{notation.name}}", description="""{{notation.description}}""")
     problem.add_notation(model_notation) 
-    
+    {% endif %}
+
     tree.setup_tree()
     
     logName = "{{model}}"
     logName = logName.replace(".dmtot", ".log")
     output = tree.execute(logName)
 
+    {% if notation:%}
     notation = NotationPrompt( purpose = problem.get_purpose(), \
                 domain = problem.get_domain_description(), \
                 thought = output, \
                 notation = problem.get_notation())
     notation.execute(logName)
+    {% endif %}
 
     print(f'Tree of thoughts executed for {problem.get_purpose()}, the result is located in {logName}')
 

@@ -1,0 +1,23 @@
+Actor: 
+  name: 'HIC'
+
+IntentionalElement:
+  id: G1
+  name: 'Collect PHI Directly and without consent'
+  type: Goal
+  modality: Permission
+
+IntentionalElement:
+  id: T1
+  name: 'Necessary for Provision of Healthcare'
+  type: Task
+
+IntentionalElement:
+  id: T2
+  name: 'Not Possible to Get Consent in a Timely Manner'
+  type: Task
+
+Decomposition:
+  source: G1
+  target: T1, T2
+  decompositionType: AND

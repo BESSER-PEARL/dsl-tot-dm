@@ -1,0 +1,103 @@
+Actor: 
+  name: 'HIC'
+
+IntentionalElement:
+  id: G1
+  name: 'Individual has Consent for Use, or Collection'
+  type: Goal
+  modality: Permission
+
+IntentionalElement:
+  id: G2
+  name: 'Individual has Consent for Disclosure'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G3
+  name: 'Have Implied Consent'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G4
+  name: 'Have Expressed Consent'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'Consent for Disclosure Conditions'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: P2
+  name: 'Disclose to Non HIC'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: P3
+  name: 'Disclose for Not Purpose of Providing Healthcare'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: T1
+  name: 'Consent of Individual'
+  type: Task
+
+IntentionalElement:
+  id: T2
+  name: 'Knowledgeable'
+  type: Task
+
+IntentionalElement:
+  id: T3
+  name: 'Related to Information'
+  type: Task
+
+IntentionalElement:
+  id: T4
+  name: 'Not Obtained via Coersion or Deception'
+  type: Task
+
+IntentionalElement:
+  id: T5
+  name: 'Individual Knows the purpose of Use, Collection, or Disclosure'
+  type: Task
+
+IntentionalElement:
+  id: T4
+  name: 'Individual Knows He May Withhold or Give Consent'
+  type: Task
+
+Dependency:
+  source: G2
+  target: P1
+
+Decomposition:
+  source: G1
+  target: G3, G4
+  decompositionType: OR
+
+Decomposition:
+  source: P1
+  target: P2, P3
+  decompositionType: OR
+
+Decomposition:
+  source: G3
+  target: T1, T2, T3, T4
+  decompositionType: AND
+
+Decomposition:
+  source: G4
+  target: T1, T2, T3, T4
+  decompositionType: AND
+
+Decomposition:
+  source: T2
+  target: T5, T6
+  decompositionType: AND

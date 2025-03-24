@@ -1,0 +1,55 @@
+Actor: 
+  name: 'HIC'
+
+IntentionalElement:
+  id: G1
+  name: 'PHI is protected against Theft, Loss or Unauthorized Use or Disclosure'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G2
+  name: 'Records are Protected against Unauthorized Copying, Modification or Disposal'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G3
+  name: 'Notify Individual'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'PHI is Lost, Stoles or is Accessed Unauthorized'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: T1
+  name: 'Send a Notification Letter'
+  type: Task
+
+Dependency:
+  source: P1
+  target: G3
+
+Contribution:
+  source: G3
+  target: G1
+  level: 100
+
+Contribution:
+  source: G3
+  target: G2
+  level: 100
+
+Contribution:
+  source: P1
+  target: G1
+  level: 100
+
+Decomposition:
+  source: G3
+  target: T1
+  decompositionType: AND

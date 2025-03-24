@@ -1,0 +1,53 @@
+Actor: 
+  name: 'ACM'
+
+IntentionalElement:
+  id: G1
+  name: 'Ensure freedom to choose suppliers
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: G2
+  name: 'Ensure having the ability to choose more than one electricity supply contract'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'Relevant connection and metering points are established'
+  type: Goal
+  modality: Precondition
+
+Actor: 
+  name: 'Prosumer'
+
+IntentionalElement:
+  id: G3 
+  name: 'Free choice of electricity supplier'
+  type: Goal
+  modality: Permission
+
+IntentionalElement:
+  id: G4
+  name: 'Have more than one electricity supply contract'
+  type: Goal
+  modality: Permission
+
+Contribution:
+  source: G1
+  target: G3
+  level: 100
+
+Contribution:
+  source: G2
+  target: G4
+  level: 100
+
+Dependency:
+  source: P1
+  target: G2
+
+Dependency:
+  source: P1
+  target: G4

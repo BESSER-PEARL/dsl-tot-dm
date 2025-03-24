@@ -22,9 +22,9 @@ class GeneratorPrompt():
         self.current_level = current_level
         
     def prompt(self):
-        prompt = 'Domain Modeling is the exercise of building conceptual models from a textual domain description to explicitly represent the knowledge of domain provided by the description.\n'
-        prompt += 'You are a domain modeling expert for {purpose} that creates a domain model from a given description:\n{domain}\n'
-        tasks = f"Your task is to generate a list of {{tasks[{self.current_level - 1}][Name]}}: \n{{tasks[{self.current_level - 1}][Purpose]}}\n"
+        prompt = 'You are a domain modeling expert that creates a domain model with a given purpose:\n{purpose}\n\n'
+        prompt += 'The model is created using the following domain:\n{domain}\n\n'
+        tasks = f"Your task is to {{tasks[{self.current_level - 1}][Name]}}: \n{{tasks[{self.current_level - 1}][Purpose]}}\n"
         prompt += tasks
         prompt += "\nTo generate a new proposal, you apply some changes to the proposal below and then return the modified elements:\n"
         prompt += "{thought}\n"
@@ -38,9 +38,10 @@ class EvaluatorPrompt():
         self.current_level = current_level
 
     def prompt(self, nCriterias):
-        prompt = 'You are a domain modelling expert for {purpose} and decides which choice is the best model.\n'+\
-                 'You Analyze each choice in detail, then conclude in the last line "The best choice is {{s}}", where s the integer id of the choice.\n' + \
-                 'You always pay extra attention at the following criterias:\n'
+        prompt = 'You are a domain modeling expert that decides which choice is the best model.\n'
+        prompt +='The domain model has the following purpose:\n{purpose}\n'
+        prompt +='You Analyze each choice in detail, then conclude in the last line "The best choice is {{s}}", where s the integer id of the choice.\n'
+        prompt +='You always pay extra attention at the following criterias:\n'
         tasks = [f"\n{i+1}. {{assessment[{self.current_level-1}][Criteria][{i}]}}" for i in range(nCriterias)]
         prompt += "".join(tasks)        
         prompt += "\n\nThe domain description is:\n{domain}\n"

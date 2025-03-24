@@ -1,0 +1,35 @@
+Actor: 
+  name: 'HIC'
+
+IntentionalElement:
+  id: G1
+  name: 'Notify Individual About Disclosure'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'Precondition'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: P2
+  name: 'Disclose Personal HI'
+  type: Goal
+  modality: Precondition
+
+IntentionalElement:
+  id: T2
+  name: 'Needed to Prevent Disclosure'
+  type: Goal
+  modality: Precondition
+
+Dependency:
+  source: G1
+  target: P1
+
+Decomposition:
+  source: P1
+  target: P2, P3
+  decompositionType: AND

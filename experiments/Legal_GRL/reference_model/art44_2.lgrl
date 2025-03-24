@@ -1,0 +1,38 @@
+Actor: 
+  name: 'Researchers'
+
+IntentionalElement:
+  id: G1
+  name: 'A Research Plan'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: T1
+  name: 'Explain Public Benefit'
+  type: Task
+
+IntentionalElement:
+  id: T2
+  name: 'Includes Affiliates of Each Person Involved in Research'
+  type: Task
+
+IntentionalElement:
+  id: T3
+  name: 'In Writing'
+  type: Task
+
+IntentionalElement:
+  id: T4
+  name: 'Explain other Matters Related to Research'
+  type: Task
+
+IntentionalElement:
+  id: T5
+  name: 'Explain Nature and Objective of Research'
+  type: Task
+
+Decomposition:
+  source: G1
+  target: T1, T2, T3, T4, T5
+  decompositionType: AND

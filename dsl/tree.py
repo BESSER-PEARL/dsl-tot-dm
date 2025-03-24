@@ -50,7 +50,7 @@ class Tree():
             model_name = os.getenv("AZURE_DEPLOYMENT_NAME")
         elif api_source == "openai":
             model_name = os.getenv("OPENAI_MODEL_NAME")
-        args = argparse.Namespace(backend= model_name, temperature=1.0, task='DM', naive_run=False, 
+        args = argparse.Namespace(backend= model_name, temperature=0.7, task='DM', naive_run=False, 
                                   prompt_sample='standard', method_generate='sample', method_evaluate='vote', method_select='greedy', 
                                   n_generate_sample=self.generator_samples, n_evaluate_sample=self.evaluator_votes, n_select_sample=1)
         task = DMToTTask(self.number_levels, self, self.modeling_problem)

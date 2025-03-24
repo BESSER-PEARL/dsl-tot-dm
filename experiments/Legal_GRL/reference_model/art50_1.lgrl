@@ -1,0 +1,36 @@
+Actor: 
+  name: 'Tax Authority'
+
+IntentionalElement:
+  id: G1
+  name: 'Levy electricity tax on the connection to the consumer'
+  type: Goal
+  modality: Obligation
+
+Actor: 
+  name: 'Prosumer'
+
+IntentionalElement:
+  id: G2
+  name: 'Pay electricity tax'
+  type: Goal
+  modality: Obligation
+
+IntentionalElement:
+  id: P1
+  name: 'Connection has been established'
+  type: Goal
+  modality: Precondition
+
+Dependency:
+  source: P1
+  target: G1
+
+Dependency:
+  source: P1
+  target: G2
+
+Contribution:
+  source: G1
+  target: G2
+  level: 100

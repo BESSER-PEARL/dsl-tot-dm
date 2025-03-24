@@ -1,0 +1,37 @@
+Model:
+    actors = Actor*
+    elementLinks = EL*
+;
+Actor: "Actor:" 
+    "name:" name=STRING
+    intentionalElements = IE*
+;
+IE: "IntentionalElement:"
+    "id:" name=ID
+    "name:" desc=STRING
+    "type:" type=intentionalElementType
+    ("modality:" modality=modality)?
+;
+
+intentionalElementType: /Softgoal|Goal|Task/;
+modality: /Obligation|Permission|Precondition/;
+
+EL: Contribution | Decomposition | Dependency;
+                   
+Contribution: "Contribution:"
+    "source:" source=[IE]
+    "target:" target=[IE]
+    "level:" level=INT
+;
+
+Decomposition: "Decomposition:"
+    "source:" source=[IE]
+    "target:" target+=[IE][',']
+    "decompositionType:" decompositionType=decompositionType
+;
+decompositionType: /AND|XOR|OR/;
+
+Dependency: "Dependency:"
+    "source:" source=[IE]
+    "target:" target=[IE]
+;
