@@ -2,7 +2,7 @@ Model:
     tree = Tree
     problem = Problem
     tasks = Task*
-    notation = Notation
+    notation = Notation?
 ;
 Tree: "tree:" 
     "levels:" levels=INT

@@ -15,7 +15,6 @@ output_folder = join(current_folder, '')
 def run(args):
       
     mm = metamodel_from_file(mmodel_folder + 'dsl_grammar.tx')
-
     model = mm.model_from_file(model_folder + args.model)
 
     print("Tree:",model.tree.levels)
@@ -24,7 +23,10 @@ def run(args):
     for t in ordered_tasks:
         print(f"Level: {t.level} Task: {t.name}")
         print("#Assessments:", len(t.assessments))
-    print("Model Notation:", model.notation.name)
+    if model.notation is None:
+        print("Model Notation not specified. Step not executed." )
+    else:
+        print("Model Notation:", model.notation.name)
 
     if not exists(output_folder):
         mkdir(output_folder)
