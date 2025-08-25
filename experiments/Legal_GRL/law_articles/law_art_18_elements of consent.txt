@@ -1,0 +1,9 @@
+18 (1) If this Act or any other Act requires the consent of an individual for the collection, use or disclosure of personal health information by a health information custodian, the consent,
+(a)  must be a consent of the individual;
+(b)  must be knowledgeable;
+(c)  must relate to the information; and
+(d)  must not be obtained through deception or coercion.  2004, c. 3, Sched. A, s. 18 (1).
+(2) Subject to subsection (3), a consent to the collection, use or disclosure of personal health information about an individual may be express or implied.  2004, c. 3, Sched. A, s. 18 (2).
+(3) A consent to the disclosure of personal health information about an individual must be express, and not implied, if,
+(a)  a health information custodian makes the disclosure to a person that is not a health information custodian; or
+(b)  a health information custodian makes the disclosure to another health information custodian and the disclosure is not for the purposes of providing health care or assisting in providing health care.  2004, c. 3, Sched. A, s. 18 (3).

@@ -1,0 +1,7 @@
+10 (1) A health information custodian that has custody or control of personal health information shall have in place information practices that comply with the requirements of this Act and its regulations.  2004, c. 3, Sched. A, s. 10 (1).
+Duty to follow practices
+(2) A health information custodian shall comply with its information practices.  2004, c. 3, Sched. A, s. 10 (2).
+Use of electronic means
+(3) A health information custodian that uses electronic means to collect, use, modify, disclose, retain or dispose of personal health information shall comply with the prescribed requirements, if any.  2004, c. 3, Sched. A, s. 10 (3).
+Providers to custodians
+(4) A person who provides goods or services for the purpose of enabling a health information custodian to use electronic means to collect, use, modify, disclose, retain or dispose of personal health information shall comply with the prescribed requirements, if any.  2004, c. 3, Sched. A, s. 10 (4).
