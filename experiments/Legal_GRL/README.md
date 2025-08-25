@@ -2,7 +2,7 @@
 <!-- ABOUT THE PROJECT -->
 ## CLERK: a Companion Large Language Model Expert for Modeling Regulatory Knowledge
 
-CLERK assists with Legal GRL modeling by implementing the ToT4DM approach with three key features:
+CLERK assists with Legal GRL modeling by implementing the [ToT4DM](https://github.com/BESSER-PEARL/dsl-tot-dm/tree/main) approach with three key features:
 
 1. **Tree-of-Thought (ToT) framework**: breaks down complex steps into manageable tasks, focusing only on essential information for constructing a Legal GRL model.
 
@@ -20,7 +20,7 @@ Request OpenAI or Azure keys to have access to the LLM API. Instructions are in 
 * [OpenAI](https://platform.openai.com/docs/quickstart)
 * [AzureOpenAI](https://learn.microsoft.com/en-gb/azure/ai-services/openai/quickstart?tabs=command-line%2Cpython&pivots=programming-language-python)
 
-Create the .env file with the variables indicated in this [file](.env_example):
+Create the .env file with the variables indicated in this [file](../../env_example):
 
 
 ### Run the project
@@ -30,7 +30,7 @@ Create the .env file with the variables indicated in this [file](.env_example):
    ```sh
    pip install -r requirements.txt
    ```
-3. Create your model, see the [how-to](#how-to-create-a-new-model-for-the-dsl) section.
+3. Create your model, see the [how-to](#how-to-execute-clerk-with-a-new-law-article) section.
 4. Run the application with your model:
    ```sh
    python run.py --model legalgrl_4lev_art4_dsl.dmtot #Replace using your CLERK model
