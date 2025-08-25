@@ -23,7 +23,7 @@ Request OpenAI or Azure keys to have access to the LLM API. Instructions are in 
 Create the .env file with the variables indicated in this [file](../../env_example):
 
 
-### Run the project
+### Run CLERK
 
 1. Install Python 3.11 and create a virtual environment
 2. Install the required packages:
