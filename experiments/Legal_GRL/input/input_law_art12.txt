@@ -1,0 +1,8 @@
+### Purpose ###
+Generate Legal GRL models from law articles.
+Create the model from the perspective of the focal actors: HIC.
+
+### Law Article ###
+12. (1) An HIC shall take steps that are reasonable in the circumstances to ensure that PHI in the custodian’s custody or control is protected against theft, loss and unauthorized use or disclosure and to ensure that the records containing the information are protected against unauthorized copying, modification or disposal.
+Notice of theft, loss, etc. to individual
+(2) An HIC that has custody or control of PHI about an individual shall notify the individual at the first reasonable opportunity if the information is stolen, lost, or accessed by unauthorized persons.

@@ -1,4 +1,4 @@
-# Execution of CLERK for generating Legal GRL models from law articles
+# Execution of ToT domain modeling tasks
 from dsl.tree import Tree
 from dsl.prompts import NotationPrompt
 from dsl.modelingProblem import ModelingProblem
@@ -7,14 +7,22 @@ from dsl.modelNotation import ModelNotation
 
 
 def run():
+    purpose = ""
     law_text = ""
     input_filename = "input_law.txt"
     with open(input_filename, "r", encoding="utf-8") as f:
-        law_text = f.read()
+        text = f.read()
 
-    problem = ModelingProblem(levels = 4, purpose = """Generate Legal GRL models from law articles.
-The focus of the model is: Ignore the gas related regulation.
-Create the model from the perspective of focal actors: Tax Authority and Consumer.""", description = law_text)
+    if "### Purpose ###" in text and "### Law Article ###" in text:
+        sections = text.split("### Law Article ###")
+        purpose = sections[0].replace("### Purpose ###", "").strip()
+        law_text = sections[1].strip()
+        print(f"Purpose: {purpose}")
+        print(f"Law Article: {law_text}")
+    else:
+        raise ValueError(f"{input_filename} does not contain the Purpose and Law Article sections!")
+
+    problem = ModelingProblem(levels = 4, purpose = purpose, description = law_text)
     tree = Tree(number_levels = 4, generator_samples = 3, evaluator_votes = 5)
     tree.set_input(problem = problem)
 
@@ -227,7 +235,7 @@ syntax tree level 3: «Precondition» P_OR_C_D is decomposed into «Precondition
     with open(output_filename, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print(f'Tree of thoughts executed for {problem.get_purpose()}, the log is located in {logName} and the output in {output_filename}')
+    print(f'Tree of thoughts execution finished for the following purpose: \n{problem.get_purpose()} \nThe log is located in {logName} and the output in {output_filename}')
 
 if __name__ == '__main__':
     run()
