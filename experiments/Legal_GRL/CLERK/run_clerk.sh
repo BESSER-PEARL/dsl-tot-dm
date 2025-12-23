@@ -1,0 +1,1 @@
+python clerk.py --law_article "input_law.txt" --focal_actors "Tax Authority and Consumer" --model_focus "Ignore the gas related regulation"

@@ -1,6 +1,1 @@
-### Purpose ###
-Generate Legal GRL models from law articles.
-Create the model from the perspective of the focal actors: Member States and Customers.
-
-### Law Article ###
 Article 4 of EU directive 2019/944: Member States shall ensure that all customers are free to purchase electricity from the supplier of their choice and shall ensure that all customers are free to have more than one electricity supply contract at the same time, provided that the required connection and metering points are established.

@@ -1,35 +1,34 @@
-# Execution of ToT domain modeling tasks
-import argparse
-from ast import literal_eval
-from dsl.tree import Tree
-from dsl.input import Input
-from dsl.modelingProblem import ModelingProblem as Problem
-from dsl.modelingTask import ModelingTask as Task
+tree: 
+  number_samples: 3
+  number_votes: 5
 
-LEVELS = 4
-N_SAMPLES = 3
-N_VOTES = 5
-LOG_NAME = "legalgrl_4lev_dsl.log"
-INPUT_ARGS = literal_eval("{'law_article': False, 'focal_actors': False, 'model_focus': True}")
+input:
+    name: "law article"
+    optional: false
 
-def CLERK(args):
-    input = Input()
-    input.process_input(parse_args())
+input:
+    name: "focal actors"
+    optional: false
 
-    problem = Problem(purpose = """Generate Legal GRL models from law articles.""", input = input, levels = LEVELS)
-    tree = Tree(n_samples = N_SAMPLES, n_votes = N_VOTES, n_levels = LEVELS)
-    tree.set_problem(problem = problem)
+input:
+    name: "model focus"
+    optional: true
 
-    modelingTasks = [None for _ in range(LEVELS)]
-    modelingTasks[0] = Task(level = 1, name = "Extract Atomic Legal Statements from Law Article")
-    modelingTasks[0].set_description("""Your task is to extract atomic legal statements from the law article given, focusing on the specified actors. Please note that atomic legal statements have the format: one <actor> (the subject), one <modal verb> (modality), one to many <actions>, and 0 to many <precondition> under which the action(s) should be taken. 
+problem:
+    purpose: "Generate Legal GRL models from law articles."
+
+task:
+    name: "Extract Atomic Legal Statements from Law Article"
+    description: "Your task is to extract atomic legal statements from the law article given, focusing on the specified actors. Please note that atomic legal statements have the format: one <actor> (the subject), one <modal verb> (modality), one to many <actions>, and 0 to many <precondition> under which the action(s) should be taken. 
 Preconditions are often expressed in law articles as conditional clauses starting with 'if'. When there are multiple parallel conditional clauses led by one 'if', capture them in one atomic legal statement.
-Take into account that an atomic statement can have no precondition.""")
-    modelingTasks[0].add_assessment("""Criterion 1: make sure atomic statements are extracted from the law article from the perspective of the focal actor(s).""")
-    modelingTasks[0].add_assessment("""Criterion 2: make sure that preconditions are extracted from the law article for clauses start with if.""")
-    problem.add_task(task = modelingTasks[0])
-    modelingTasks[1] = Task(level = 2, name = "Classify and Format Atomic Legal Statements")
-    modelingTasks[1].set_description("""Your task is to: (1) classify each atomic legal statement extracted in the previous step to either an obligation or a permission, based on the modal verb of the legal statement; (2) format each classified atomic legal statement with the template provided below:
+Take into account that an atomic statement can have no precondition."
+    assessments: 
+      "Criterion 1: make sure atomic statements are extracted from the law article from the perspective of the focal actor(s)."
+      "Criterion 2: make sure that preconditions are extracted from the law article for clauses start with if."
+
+task:
+    name: "Classify and Format Atomic Legal Statements"
+    description: "Your task is to: (1) classify each atomic legal statement extracted in the previous step to either an obligation or a permission, based on the modal verb of the legal statement; (2) format each classified atomic legal statement with the template provided below:
 
 Actor: description of actor
 Modal Verb: ...
@@ -37,12 +36,15 @@ Modality: <Obligation or Permission>
 Action(s): description of action(s)
 Precondition(s): description of precondition(s)
 
-Do not include the Precondition(s) under which the Action(s) should be taken in the Action(s).""")
-    modelingTasks[1].add_assessment("""Criterion 1: make sure description of action(s) do not include description of precondition(s).""")
-    modelingTasks[1].add_assessment("""Criterion 2: every atomic legal statement should be classified as either an obligation or a permission.""")
-    problem.add_task(task = modelingTasks[1])
-    modelingTasks[2] = Task(level = 3, name = "Model Atomic Legal Statements in Legal GRL")
-    modelingTasks[2].set_description("""Your task is create one Legal GRL model capturing the classified and formatted atomic legal statements from the previous step. Legal GRL is a DSML for modeling regulatory knowledge. Here is the Legal GRL syntax in TextX format:
+Do not include the Precondition(s) under which the Action(s) should be taken in the Action(s)."
+
+    assessments: 
+      "Criterion 1: make sure description of action(s) do not include description of precondition(s)."
+      "Criterion 2: every atomic legal statement should be classified as either an obligation or a permission."
+
+task:
+    name: "Model Atomic Legal Statements in Legal GRL"
+    description: 'Your task is create one Legal GRL model capturing the classified and formatted atomic legal statements from the previous step. Legal GRL is a DSML for modeling regulatory knowledge. Here is the Legal GRL syntax in TextX format:
 
 — begin of Legal GRL Syntax —
 Model:
@@ -102,13 +104,16 @@ Precondition(s): description of precondition(s)
 
 3. If the statement has preconditions, create one «Precondition», namely one IntentionalElement of type Goal with modality Precondition. The description of the «Precondition» is the description of precondition(s) of the statement.
 
-4. Connect the «Precondition» created in step 3 to the «Goal» created in step 2  with a Dependency, whereby the «Precondition» is the source.""")
-    modelingTasks[2].add_assessment("""Criterion 1: a «Precondition», namely an IntentionalElement of type Goal with modality Precondition, must be the source of a Dependency.""")
-    modelingTasks[2].add_assessment("""Criterion 2: the source of a Dependency must be a «Precondition», and the target of a Dependency must be either an «Obligation» or an «Permission».""")
-    modelingTasks[2].add_assessment("""Criterion 3: no duplication of model elements with same description.""")
-    problem.add_task(task = modelingTasks[2])
-    modelingTasks[3] = Task(level = 4, name = "Refine Legal GRL model")
-    modelingTasks[3].set_description("""Your task is to refine «Obligations», «Permissions» and «Preconditions» in the Legal GRL model created in the previous step. Your output, namely the refined Legal GRL model, should be formatted with the Legal GRL syntax defined by a TextX grammar.
+4. Connect the «Precondition» created in step 3 to the «Goal» created in step 2  with a Dependency, whereby the «Precondition» is the source.'
+
+  assessments:
+      "Criterion 1: a «Precondition», namely an IntentionalElement of type Goal with modality Precondition, must be the source of a Dependency."
+      "Criterion 2: the source of a Dependency must be a «Precondition», and the target of a Dependency must be either an «Obligation» or an «Permission»."
+      "Criterion 3: no duplication of model elements with same description."
+
+task:
+    name: "Refine Legal GRL model"
+    description: "Your task is to refine «Obligations», «Permissions» and «Preconditions» in the Legal GRL model created in the previous step. Your output, namely the refined Legal GRL model, should be formatted with the Legal GRL syntax defined by a TextX grammar.
 
  
 
@@ -214,24 +219,8 @@ syntax tree level 2: «Precondition» P_AND_B_OR is decomposed into «Preconditi
 
 syntax tree level 3: «Precondition» P_OR_C_D is decomposed into «Precondition» P_C and «Precondition» P_D with an 'OR' Decomposition.
 
-(5) Create contribution links to defines the level of impact that the satisfaction of a source IntentionalElement has on the satisfaction of a destination IntentionalElement. The level of impact is between [-100, 100], with 100 meaning the satisfaction of the source IntentionalElement sufficiently makes the satisfaction of the destination IntentionalElement, and -100 meaning the satisfaction of the source IntentionalElement sufficiently breaks the satisfaction of the destination IntentionalElement. Draw contribution links among goals or soft goals when pertinent.""")
-    modelingTasks[3].add_assessment("""Criterion 1: Decomposition is only between IntentionalElements of the same type and modality, namely «Precondition» are only decomposed into «Preconditions», «Obligation» are only decomposed into «Obligations», and «Permission» are only decomposed into «Permissions».""")
-    modelingTasks[3].add_assessment("""Criterion 2: The target of the Decomposition must be more than one Intentional Element.""")
-    problem.add_task(task = modelingTasks[3])
+(5) Create contribution links to defines the level of impact that the satisfaction of a source IntentionalElement has on the satisfaction of a destination IntentionalElement. The level of impact is between [-100, 100], with 100 meaning the satisfaction of the source IntentionalElement sufficiently makes the satisfaction of the destination IntentionalElement, and -100 meaning the satisfaction of the source IntentionalElement sufficiently breaks the satisfaction of the destination IntentionalElement. Draw contribution links among goals or soft goals when pertinent."
+    assessments: 
+      "Criterion 1: Decomposition is only between IntentionalElements of the same type and modality, namely «Precondition» are only decomposed into «Preconditions», «Obligation» are only decomposed into «Obligations», and «Permission» are only decomposed into «Permissions»."
+      "Criterion 2: The target of the Decomposition must be more than one Intentional Element."
 
-    tree.setup_tree()
-    output = tree.execute(LOG_NAME)
-
-    print(f'Tree of thoughts executed for {problem.get_purpose()}, the result is located in {LOG_NAME}')
-
-def parse_args():
-    args = argparse.ArgumentParser()
-    for name, is_optional in INPUT_ARGS.items():
-        is_required = not is_optional
-        args.add_argument(f'--{name}', type=str, required=is_required, default='')
-    args = args.parse_args()
-    return args
-    
-if __name__ == '__main__':
-    args = parse_args()
-    CLERK(args)

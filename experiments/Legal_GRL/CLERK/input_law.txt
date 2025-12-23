@@ -1,5 +1,4 @@
-### Purpose ###
-Generate Legal GRL models from law articles.
+### Model Focus ###
 The focus of the model is: Ignore the gas related regulation.
 Create the model from the perspective of focal actors: Tax Authority and Consumer.
 

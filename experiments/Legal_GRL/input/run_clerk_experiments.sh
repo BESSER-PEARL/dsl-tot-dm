@@ -1,0 +1,8 @@
+python clerk.py --law_article "input_law_art4.txt" --focal_actors "Member States and Customers"
+python clerk.py --law_article "input_law_art10.txt" --focal_actors "Provider and HIC"
+python clerk.py --law_article "input_law_art12.txt" --focal_actors "HIC"
+python clerk.py --law_article "input_law_art18.txt" --focal_actors "HIC"
+python clerk.py --law_article "input_law_art36_2.txt" --focal_actors "HIC"
+python clerk.py --law_article "input_law_art38_2.txt" --focal_actors "HIC"
+python clerk.py --law_article "input_law_art44_2.txt" --focal_actors "Researchers"
+python clerk.py --law_article "input_law_art50_1.txt" --focal_actors "Tax Authority and Consumer" --model_focus "Ignore the gas related regulation"

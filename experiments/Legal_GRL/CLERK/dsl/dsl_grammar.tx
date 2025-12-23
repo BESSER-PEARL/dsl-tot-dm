@@ -1,0 +1,27 @@
+Model:
+    tree = Tree
+    inputs = Input*
+    problem = Problem?
+    tasks = Task*
+    notation = Notation?
+;
+Input: "input:"
+    "name:" name=STRING
+    "optional:" isOptional=BOOL
+;
+Tree: "tree:" 
+    "number_samples:" number_samples=INT
+    "number_votes:" number_votes=INT
+;
+Problem: "problem:"
+    "purpose:" purpose=STRING
+;
+Task: "task:"
+    "name:" name=STRING
+    "description:" description=STRING
+    "assessments:" assessments=STRING*
+;
+Notation: "notation:"
+    "name:" name=STRING
+    "description:" description=STRING
+;

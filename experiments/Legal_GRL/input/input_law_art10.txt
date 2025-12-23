@@ -1,8 +1,3 @@
-### Purpose ###
-Generate Legal GRL models from law articles.
-Create the model from the perspective of the focal actors: Provider and HIC
-
-### Law Article ###
 Information practices
 10 (1) A health information custodian that has custody or control of personal health information shall have in place information practices that comply with the requirements of this Act and its regulations.  2004, c. 3, Sched. A, s. 10 (1).
 Duty to follow practices

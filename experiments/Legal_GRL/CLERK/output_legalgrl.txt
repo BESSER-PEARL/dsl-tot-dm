@@ -1,38 +1,38 @@
 ### Extract Atomic Legal Statements from Law Article:
 
 1. **Tax Authority** shall **ensure** that all customers are free to purchase electricity from the supplier of their choice.
-  
+
 2. **Tax Authority** shall **ensure** that all customers are free to have more than one electricity supply contract at the same time, provided that the required connection and metering points are established.
 
 3. **Consumer** shall **have** the right to purchase electricity from the supplier of their choice.
 
-4. **Consumer** shall **have** the right to have more than one electricity supply contract at the same time, provided that the required connection and metering points are established.
+4. **Consumer** shall **have** the right to enter into more than one electricity supply contract at the same time, provided that the required connection and metering points are established.
 
 ### Classify and Format Atomic Legal Statements:
 
-1. **Actor**: Tax Authority  
-   **Modal Verb**: shall  
-   **Modality**: Obligation  
-   **Action(s)**: ensure that all customers are free to purchase electricity from the supplier of their choice.  
-   **Precondition(s)**: N/A  
+1. **Actor:** Tax Authority  
+   **Modal Verb:** shall  
+   **Modality:** Obligation  
+   **Action(s):** ensure that all customers are free to purchase electricity from the supplier of their choice.  
+   **Precondition(s):** N/A  
 
-2. **Actor**: Tax Authority  
-   **Modal Verb**: shall  
-   **Modality**: Obligation  
-   **Action(s)**: ensure that all customers are free to have more than one electricity supply contract at the same time.  
-   **Precondition(s)**: required connection and metering points are established.  
+2. **Actor:** Tax Authority  
+   **Modal Verb:** shall  
+   **Modality:** Obligation  
+   **Action(s):** ensure that all customers are free to have more than one electricity supply contract at the same time.  
+   **Precondition(s):** required connection and metering points are established.  
 
-3. **Actor**: Consumer  
-   **Modal Verb**: shall  
-   **Modality**: Permission  
-   **Action(s)**: have the right to purchase electricity from the supplier of their choice.  
-   **Precondition(s)**: N/A  
+3. **Actor:** Consumer  
+   **Modal Verb:** shall  
+   **Modality:** Permission  
+   **Action(s):** have the right to purchase electricity from the supplier of their choice.  
+   **Precondition(s):** N/A  
 
-4. **Actor**: Consumer  
-   **Modal Verb**: shall  
-   **Modality**: Permission  
-   **Action(s)**: have the right to have more than one electricity supply contract at the same time.  
-   **Precondition(s)**: required connection and metering points are established.  
+4. **Actor:** Consumer  
+   **Modal Verb:** shall  
+   **Modality:** Permission  
+   **Action(s):** have the right to enter into more than one electricity supply contract at the same time.  
+   **Precondition(s):** required connection and metering points are established.  
 
 ### Model Atomic Legal Statements in Legal GRL:
 
@@ -42,98 +42,99 @@ Model:
         Actor: 
             name: "Tax Authority"
             intentionalElements = 
-                IntentionalElement: 
-                    id: "IE1"
+                IE: 
+                    id: "TA_EnsurePurchase"
                     description: "ensure that all customers are free to purchase electricity from the supplier of their choice."
                     type: Goal
                     modality: Obligation
-                IntentionalElement: 
-                    id: "IE2"
+                IE: 
+                    id: "TA_EnsureMultipleContracts"
                     description: "ensure that all customers are free to have more than one electricity supply contract at the same time."
                     type: Goal
                     modality: Obligation
-                IntentionalElement: 
-                    id: "IE2_Precondition"
-                    description: "required connection and metering points are established."
-                    type: Goal
-                    modality: Precondition
-
-        Actor: 
-            name: "Consumer"
-            intentionalElements = 
-                IntentionalElement: 
-                    id: "IE3"
-                    description: "have the right to purchase electricity from the supplier of their choice."
-                    type: Goal
-                    modality: Permission
-                IntentionalElement: 
-                    id: "IE4"
-                    description: "have the right to have more than one electricity supply contract at the same time."
-                    type: Goal
-                    modality: Permission
-                IntentionalElement: 
-                    id: "IE4_Precondition"
+                IE: 
+                    id: "TA_ConnectionMetering"
                     description: "required connection and metering points are established."
                     type: Goal
                     modality: Precondition
 
     elementLinks = 
         Dependency: 
-            source: IE2_Precondition
-            target: IE2
+            source: "TA_ConnectionMetering"
+            target: "TA_EnsureMultipleContracts"
+
+    actors = 
+        Actor: 
+            name: "Consumer"
+            intentionalElements = 
+                IE: 
+                    id: "C_PurchaseRight"
+                    description: "have the right to purchase electricity from the supplier of their choice."
+                    type: Goal
+                    modality: Permission
+                IE: 
+                    id: "C_MultipleContracts"
+                    description: "have the right to enter into more than one electricity supply contract at the same time."
+                    type: Goal
+                    modality: Permission
+                IE: 
+                    id: "C_ConnectionMetering"
+                    description: "required connection and metering points are established."
+                    type: Goal
+                    modality: Precondition
+
+    elementLinks = 
         Dependency: 
-            source: IE4_Precondition
-            target: IE4
-;
+            source: "C_ConnectionMetering"
+            target: "C_MultipleContracts"
 ```
 
 ### Refine Legal GRL model:
 
-1. **Obligation IE2**: ensure that all customers are free to have more than one electricity supply contract at the same time.
-   
-   Propositional Logic:
-   - A: all customers have more than one electricity supply contract.
-   - B: required connection and metering points are established.
+#### Refinement of Obligations and Permissions:
+- For **Tax Authority**:
+  - **Obligation**: "ensure that all customers are free to purchase electricity from the supplier of their choice."
+    - Propositional Logic: A
+      - A: "all customers are free to purchase electricity from the supplier of their choice."
+  - **Obligation**: "ensure that all customers are free to have more than one electricity supply contract at the same time."
+    - Propositional Logic: B AND C
+      - B: "all customers are free to have more than one electricity supply contract at the same time."
+      - C: "required connection and metering points are established."
 
-   Formula: A and B.
+- For **Consumer**:
+  - **Permission**: "have the right to purchase electricity from the supplier of their choice."
+    - Propositional Logic: D
+      - D: "have the right to purchase electricity from the supplier of their choice."
+  - **Permission**: "have the right to enter into more than one electricity supply contract at the same time."
+    - Propositional Logic: E AND F
+      - E: "have the right to enter into more than one electricity supply contract at the same time."
+      - F: "required connection and metering points are established."
 
-   Syntax Tree:
-   ```
-       AND
-       /       \
-      A         B
-   ```
+#### Syntax Tree Construction:
 
-   Sub Intentional Elements:
-   - IE2_A: all customers have more than one electricity supply contract.
-   - IE2_B: required connection and metering points are established.
+For Tax Authority:
+- **Obligation** "ensure that all customers are free to purchase electricity from the supplier of their choice." (A)
+- **Obligation** "ensure that all customers are free to have more than one electricity supply contract at the same time." (B AND C)
 
-   Connections:
-   - Decomposition: IE2 decomposed into IE2_A and IE2_B with an 'AND' decomposition.
+For Consumer:
+- **Permission** "have the right to purchase electricity from the supplier of their choice." (D)
+- **Permission** "have the right to enter into more than one electricity supply contract at the same time." (E AND F)
 
-2. **Permission IE4**: have the right to have more than one electricity supply contract at the same time.
-   
-   Propositional Logic:
-   - C: consumer has more than one electricity supply contract.
-   - D: required connection and metering points are established.
+#### New Intentional Elements:
 
-   Formula: C and D.
+For Tax Authority:
+- TA_A: "all customers are free to purchase electricity from the supplier of their choice."
+- TA_B: "all customers are free to have more than one electricity supply contract at the same time."
+- TA_C: "required connection and metering points are established."
+- TA_AND_B_C: "all customers are free to have more than one electricity supply contract at the same time and the required connection and metering points are established."
 
-   Syntax Tree:
-   ```
-       AND
-       /       \
-      C         D
-   ```
+For Consumer:
+- C_D: "have the right to purchase electricity from the supplier of their choice."
+- C_E: "have the right to enter into more than one electricity supply contract at the same time."
+- C_F: "required connection and metering points are established."
+- C_AND_E_F: "have the right to enter into more than one electricity supply contract at the same time and the required connection and metering points are established."
 
-   Sub Intentional Elements:
-   - IE4_C: consumer has more than one electricity supply contract.
-   - IE4_D: required connection and metering points are established.
-
-   Connections:
-   - Decomposition: IE4 decomposed into IE4_C and IE4_D with an 'AND' decomposition.
-
-Final Refined Legal GRL Model:
+#### Updated Legal GRL Model:
 
 ```
 Model:
@@ -141,72 +142,61 @@ Model:
         Actor: 
             name: "Tax Authority"
             intentionalElements = 
-                IntentionalElement: 
-                    id: "IE1"
+                IE: 
+                    id: "TA_EnsurePurchase"
                     description: "ensure that all customers are free to purchase electricity from the supplier of their choice."
                     type: Goal
                     modality: Obligation
-                IntentionalElement: 
-                    id: "IE2"
+                IE: 
+                    id: "TA_EnsureMultipleContracts"
                     description: "ensure that all customers are free to have more than one electricity supply contract at the same time."
                     type: Goal
                     modality: Obligation
-                IntentionalElement: 
-                    id: "IE2_A"
-                    description: "all customers have more than one electricity supply contract."
-                    type: Goal
-                    modality: Obligation
-                IntentionalElement: 
-                    id: "IE2_B"
+                IE: 
+                    id: "TA_ConnectionMetering"
                     description: "required connection and metering points are established."
                     type: Goal
                     modality: Precondition
-
-                IntentionalElement: 
-                    id: "IE2_AND"
-                    description: "all customers are free to have more than one electricity supply contract."
+                IE: 
+                    id: "TA_MultipleContractsEstablishment"
+                    description: "all customers are free to have more than one electricity supply contract at the same time and required connection and metering points are established."
                     type: Goal
-                    modality: Precondition
-
-        Actor: 
-            name: "Consumer"
-            intentionalElements = 
-                IntentionalElement: 
-                    id: "IE3"
-                    description: "have the right to purchase electricity from the supplier of their choice."
-                    type: Goal
-                    modality: Permission
-                IntentionalElement: 
-                    id: "IE4"
-                    description: "have the right to have more than one electricity supply contract at the same time."
-                    type: Goal
-                    modality: Permission
-                IntentionalElement: 
-                    id: "IE4_C"
-                    description: "consumer has more than one electricity supply contract."
-                    type: Goal
-                    modality: Permission
-                IntentionalElement: 
-                    id: "IE4_D"
-                    description: "required connection and metering points are established."
-                    type: Goal
-                    modality: Precondition
+                    modality: Goal
 
     elementLinks = 
         Dependency: 
-            source: IE2_B
-            target: IE2
-        Decomposition: 
-            source: IE2
-            target: IE2_A, IE2_B
-            decompositionType: AND
+            source: "TA_ConnectionMetering"
+            target: "TA_MultipleContractsEstablishment"
 
+    actors = 
+        Actor: 
+            name: "Consumer"
+            intentionalElements = 
+                IE: 
+                    id: "C_PurchaseRight"
+                    description: "have the right to purchase electricity from the supplier of their choice."
+                    type: Goal
+                    modality: Permission
+                IE: 
+                    id: "C_MultipleContracts"
+                    description: "have the right to enter into more than one electricity supply contract at the same time."
+                    type: Goal
+                    modality: Permission
+                IE: 
+                    id: "C_ConnectionMetering"
+                    description: "required connection and metering points are established."
+                    type: Goal
+                    modality: Precondition
+                IE: 
+                    id: "C_MultipleContractsEstablishment"
+                    description: "have the right to enter into more than one electricity supply contract at the same time and required connection and metering points are established."
+                    type: Goal
+                    modality: Goal
+
+    elementLinks = 
         Dependency: 
-            source: IE4_D
-            target: IE4
-        Decomposition: 
-            source: IE4
-            target: IE4_C, IE4_D
-            decompositionType: AND
-;
+            source: "C_ConnectionMetering"
+            target: "C_MultipleContractsEstablishment"
 ```
+
+This refined GRL model now clearly articulates the obligations and permissions of the Tax Authority and Consumer, along with their dependencies on the necessary preconditions established in the law article.

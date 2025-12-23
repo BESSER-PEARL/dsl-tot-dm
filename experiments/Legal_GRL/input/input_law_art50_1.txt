@@ -1,7 +1,1 @@
-### Purpose ###
-Generate Legal GRL models from law articles.
-The focus of the model is: Ignore the gas related regulation.
-Create the model from the perspective of focal actors: Tax Authority and Consumer.
-
-### Law Article ###
 The tax is levied on the supply of natural gas or electricity via a connection to the consumer, as well as on the supply of natural gas via a connection to a CNG filling station.

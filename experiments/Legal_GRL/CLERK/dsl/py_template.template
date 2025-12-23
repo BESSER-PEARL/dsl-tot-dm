@@ -1,0 +1,49 @@
+# Execution of ToT domain modeling tasks
+import argparse
+from ast import literal_eval
+from dsl.tree import Tree
+from dsl.input import Input
+from dsl.modelingProblem import ModelingProblem as Problem
+from dsl.modelingTask import ModelingTask as Task
+
+LEVELS = {{ model.tasks | length }}
+N_SAMPLES = {{ model.tree.number_samples }}
+N_VOTES = {{ model.tree.number_votes }}
+LOG_NAME = "{{log_name}}"
+INPUT_ARGS = literal_eval("{{input_data}}")
+
+def CLERK(args):
+    input = Input()
+    input.process_input(parse_args())
+
+    problem = Problem(purpose = """{{model.problem.purpose}}""", input = input, levels = LEVELS)
+    tree = Tree(n_samples = N_SAMPLES, n_votes = N_VOTES, n_levels = LEVELS)
+    tree.set_problem(problem = problem)
+
+    modelingTasks = [None for _ in range(LEVELS)]
+    {% for task in model.tasks %}
+    {% set outer_loop = loop %}
+    modelingTasks[{{outer_loop.index0}}] = Task(level = {{outer_loop.index0 + 1}}, name = "{{task.name}}")
+    modelingTasks[{{outer_loop.index0 }}].set_description("""{{task.description}}""")
+    {% for criterion in task.assessments %}
+    modelingTasks[{{outer_loop.index0 }}].add_assessment("""{{criterion}}""")
+    {% endfor %}
+    problem.add_task(task = modelingTasks[{{outer_loop.index0}}])
+    {% endfor %}
+
+    tree.setup_tree()
+    output = tree.execute(LOG_NAME)
+
+    print(f'Tree of thoughts executed for {problem.get_purpose()}, the result is located in {LOG_NAME}')
+
+def parse_args():
+    args = argparse.ArgumentParser()
+    for name, is_optional in INPUT_ARGS.items():
+        is_required = not is_optional
+        args.add_argument(f'--{name}', type=str, required=is_required, default='')
+    args = args.parse_args()
+    return args
+    
+if __name__ == '__main__':
+    args = parse_args()
+    CLERK(args)
