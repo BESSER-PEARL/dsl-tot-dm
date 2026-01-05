@@ -7,8 +7,12 @@ Model:
 ;
 Input: "input:"
     "name:" name=STRING
+    "type:" type=inputType
     "optional:" isOptional=BOOL
 ;
+
+inputType: /FILE|STR|INT/;
+
 Tree: "tree:" 
     "number_samples:" number_samples=INT
     "number_votes:" number_votes=INT

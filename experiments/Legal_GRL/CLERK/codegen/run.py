@@ -21,8 +21,10 @@ def run(args):
     input_data = {}
     for input in model.inputs:
         input_name = format_arg_names(input.name)
-        print(f"Input arg name:\n{input_name}, Optional: {input.isOptional}")
-        input_data[input_name] =  input.isOptional
+        print(f"Input arg name:\n{input_name}, Type: {input.type}, Optional: {input.isOptional}")
+        input_data[input_name] =  {}
+        input_data[input_name]["type"] = input.type
+        input_data[input_name]["isOptional"] = input.isOptional
 
     print("Tree:",len(model.tasks))
     for level, task in enumerate(model.tasks):
@@ -44,8 +46,7 @@ def run(args):
     template = jinja_env.get_template('py_template.template')
 
     with open(join(output_folder, "%s.py" % "clerk"), 'w') as f:
-        log_name=args.model.replace(".dmtot", ".log")
-        f.write(template.render(model=model, input_data = input_data, log_name = log_name))
+        f.write(template.render(model=model, input_data = input_data))
 
 def parse_args():
     args = argparse.ArgumentParser()

@@ -1,35 +1,21 @@
 from dsl.input import Input
 from dsl.modelingTask import ModelingTask
 from dsl.modelNotation import ModelNotation
-import re
-regex_path = r'(\/.*?\.[\w:]+)'
 
 class ModelingProblem():
     def __init__(self, levels, input, purpose = 'UML Class diagram'):
         self.modelingTasks = ['']*(levels)
         self.assessment = ['']*(levels)  
         self.modelNotation = {}
-        input_values = input.get_inputs_values()
-        self.domain_description = input_values[0][1]
+        self.domain_description = input.get_domain()
         self.modeling_purpose = purpose
         self.input = input
+        input_values = input.get_inputs_values()
         self.focus_actors = [i[1] for i in input_values[1:]]
         
     def get_purpose(self):
-        #print("get_purpose()", [self.modeling_purpose] + self.focus_purpose)
-        #return [self.modeling_purpose] + self.focus_purpose
         return self.modeling_purpose
-        #if self.focus_purpose is None:
-        #    return [self.modeling_purpose]
-        #else:
-        #    return self.modeling_purpose, self.focus_purpose
-    """
-    Generate Legal GRL models from law articles.
-    The focus of the model is: Ignore the gas related regulation.
-    Create the model from the perspective of focal actors: Tax Authority and Consumer.
-
-    """
-    
+            
     def get_domain_description(self):
         return self.domain_description
 

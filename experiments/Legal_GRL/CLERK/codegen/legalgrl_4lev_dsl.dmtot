@@ -4,14 +4,17 @@ tree:
 
 input:
     name: "law article"
+    type: FILE
     optional: false
 
 input:
     name: "focal actors"
+    type: STR
     optional: false
 
 input:
     name: "model focus"
+    type: STR
     optional: true
 
 problem:

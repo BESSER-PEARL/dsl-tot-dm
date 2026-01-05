@@ -9,12 +9,12 @@ from dsl.modelingTask import ModelingTask as Task
 LEVELS = 4
 N_SAMPLES = 3
 N_VOTES = 5
-LOG_NAME = "legalgrl_4lev_dsl.log"
-INPUT_ARGS = literal_eval("{'law_article': False, 'focal_actors': False, 'model_focus': True}")
+INPUT_ARGS = literal_eval("{'law_article': {'type': 'FILE', 'isOptional': False}, 'focal_actors': {'type': 'STR', 'isOptional': False}, 'model_focus': {'type': 'STR', 'isOptional': True}}")
 
 def CLERK(args):
     input = Input()
-    input.process_input(parse_args())
+    input.process_input(args, INPUT_ARGS)
+    LOG_NAME = f"output_{input.get_name().replace('.txt', '.log')}"
 
     problem = Problem(purpose = """Generate Legal GRL models from law articles.""", input = input, levels = LEVELS)
     tree = Tree(n_samples = N_SAMPLES, n_votes = N_VOTES, n_levels = LEVELS)
@@ -224,11 +224,14 @@ syntax tree level 3: «Precondition» P_OR_C_D is decomposed into «Precondition
 
     print(f'Tree of thoughts executed for {problem.get_purpose()}, the result is located in {LOG_NAME}')
 
+TYPE_MAP = { "FILE": str, "STR": str, "INT": int}
+
 def parse_args():
     args = argparse.ArgumentParser()
-    for name, is_optional in INPUT_ARGS.items():
-        is_required = not is_optional
-        args.add_argument(f'--{name}', type=str, required=is_required, default='')
+    for name, input in INPUT_ARGS.items():
+        py_type = TYPE_MAP.get(input["type"].lower(), str)
+        is_required = not input["isOptional"]
+        args.add_argument(f'--{name}', type=py_type, required=is_required, default='')
     args = args.parse_args()
     return args
     

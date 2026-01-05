@@ -82,14 +82,3 @@ class NotationPrompt():
         model_notation = gpt(prompt, n=1)
         logger.info(f'Model notation:\n{model_notation[0]}')
         return model_notation
-    
-
-        #tasks = f"Your task is to {{tasks[{self.current_level - 1}][Name]}}: "
-        #tasks +=f"\n{{tasks[{self.current_level - 1}][Purpose][{0}]}}\n"
-        #tasks +=f"\nThe focus of the model is: {{tasks[{self.current_level - 1}][Purpose][{2}]}}\n"
-        #tasks +=f"\nCreate the model from the perspective of focal actors: {{tasks[{self.current_level - 1}][Purpose][{1}]}}\n"
-        """
-        Generate Legal GRL models from law articles.
-        The focus of the model is: Ignore the gas related regulation.
-        Create the model from the perspective of focal actors: Tax Authority and Consumer.
-        """
