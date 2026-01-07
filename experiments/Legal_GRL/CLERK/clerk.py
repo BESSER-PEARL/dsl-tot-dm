@@ -14,7 +14,7 @@ INPUT_ARGS = literal_eval("{'law_article': {'type': 'FILE', 'isOptional': False}
 def CLERK(args):
     input = Input()
     input.process_input(args, INPUT_ARGS)
-    LOG_NAME = f"output_{input.get_name().replace('.txt', '.log')}"
+    LOG_NAME = f"output_{input.get_name()}"
 
     problem = Problem(purpose = """Generate Legal GRL models from law articles.""", input = input, levels = LEVELS)
     tree = Tree(n_samples = N_SAMPLES, n_votes = N_VOTES, n_levels = LEVELS)

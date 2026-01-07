@@ -14,7 +14,7 @@ INPUT_ARGS = literal_eval("{{input_data}}")
 def CLERK(args):
     input = Input()
     input.process_input(args, INPUT_ARGS)
-    LOG_NAME = f"output_{input.get_name().replace('.txt', '.log')}"
+    LOG_NAME = f"output_{input.get_name()}"
 
     problem = Problem(purpose = """{{model.problem.purpose}}""", input = input, levels = LEVELS)
     tree = Tree(n_samples = N_SAMPLES, n_votes = N_VOTES, n_levels = LEVELS)
